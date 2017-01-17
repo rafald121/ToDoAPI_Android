@@ -25,6 +25,7 @@
             android:name=".MainActivity"
             android:label="To Do List">
 <!--TODO sprawdzic co zmienia usuniecie intent filter \/-->
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
