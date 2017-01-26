@@ -1,6 +1,8 @@
 package com.example.android.todoapi_android;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -29,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public final String URLSTRING = "http://10.0.2.2:5000/login";
+    public static final String SESSIONINFO = "Session";
     EditText editTextLogin;
     EditText editTextPassword;
     TextView textViewError;
@@ -39,8 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     JSONObject responseJSON;
     HashMap<String, String> responseMAP;
 
-    VolleyCallback callback;
-    
+    SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin = (Button) findViewById(R.id.login_button);
 
         buttonLogin.setOnClickListener(this);
+
     }
 
     @Override
@@ -68,10 +72,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             textViewError.setVisibility(TextView.VISIBLE);
             textViewError.setText("LOGIN OR DATA MUSTN'T BE EMPTY");
         } else {
+
             Log.i(TAG, "onClick: before postRequest");
             postRequest(login,password, new VolleyCallback(){
+
                 @Override
                 public void onSuccess(JSONObject result) {
+
                     Log.i(TAG, "onSuccess: result: " + result.toString());
                     responseJSON = result;
 
@@ -87,12 +94,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                         if(responseMAP.get("info").equals("OK")) {
-                            toMain.putExtra("login", login);
+
+                            sharedPreferences = getSharedPreferences(SESSIONINFO, Context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("login", login);
+                            editor.putString("token", responseMAP.get("token"));
+                            editor.commit();
+
                             startActivity(toMain);
                         } else{
                             textViewError.setVisibility(TextView.VISIBLE);
                             textViewError.setText("Error in login");
                         }
+
                     } else {
                         Log.e(TAG, "onClick: responseJSON IS NULL");
                     }

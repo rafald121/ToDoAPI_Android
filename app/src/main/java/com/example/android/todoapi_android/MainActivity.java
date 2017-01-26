@@ -1,6 +1,8 @@
 package com.example.android.todoapi_android;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,13 +21,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String login = getIntent().getStringExtra("login");
-
+        infoAboutLogin = (TextView) findViewById(R.id.textViewloginInfo);
         buttonNewTask = (Button) findViewById(R.id.buttonNewTask);
         buttonListOfTasks = (Button) findViewById(R.id.buttonListOfTasks);
         buttonSchoolTasks = (Button) findViewById(R.id.buttonSchoolTasks);
         buttonWorkTasks = (Button) findViewById( R.id.buttonWorkTasks);
         buttonHomeTasks = (Button) findViewById(R.id.buttonHomeTasks);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
+                Context.MODE_PRIVATE);
+        String login = sharedPreferences.getString("login","");
+
+        infoAboutLogin.setText(infoAboutLogin.getText() + " " + login);
+//        String login = getIntent().getStringExtra("login");
+
+
 
         initButtons();
 
@@ -45,11 +55,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int clickedAction = v.getId();
         switch (clickedAction){
             case R.id.buttonNewTask:
-                Intent nextIntent = new Intent(this, newTaskActivity.class);
+                Intent nextIntent = new Intent(this, NewTaskActivity.class);
                 startActivity(nextIntent);
                 break;
             case R.id.buttonListOfTasks:
-                Intent listOfTasks = new Intent(this, listOfTasksActivity.class);
+                Intent listOfTasks = new Intent(this, ListOfTasksActivity.class);
                 startActivity(listOfTasks);
                 break;
             default:
