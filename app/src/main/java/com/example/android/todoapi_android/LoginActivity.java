@@ -1,5 +1,6 @@
 package com.example.android.todoapi_android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -55,6 +56,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         login = editTextLogin.getText().toString();
         password = editTextPassword.getText().toString();
 
+        final Intent toMain = new Intent(this, MainActivity.class);
+
         if ( login.equals("") || password.equals("")){
             Log.e(TAG, "onClick: LOGIN OR DATA MUSTN'T BE EMPTY");
         } else {
@@ -62,28 +65,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             postRequest(login,password, new VolleyCallback(){
                 @Override
                 public void onSuccess(JSONObject result) {
+                    Log.i(TAG, "onSuccess: result: " + result.toString());
                     responseJSON = result;
+
+                    Log.i(TAG, "onClick: PRZED RESPONSE != NULL");
+                    if (responseJSON!=null){
+
+                        try {
+                            Log.i(TAG, "onClick: BEFORE PARSED RESPONSE");
+                            responseMAP = HttpUtils.parseJSONLogin(responseJSON);
+                            Log.i(TAG, "onClick: PARSED RESPONSE");
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+
+                        if(responseMAP.get("info").equals("OK")) {
+                            startActivity(toMain);
+                        } else{
+
+                        }
+                    } else {
+                        Log.e(TAG, "onClick: responseJSON IS NULL");
+                    }
+
                 }
             });
         }
 
-        Log.i(TAG, "onClick: PRZED RESPONSE != NULL");
-        if (responseJSON!=null){
 
-            try {
-                Log.i(TAG, "onClick: BEFORE PARSED RESPONSE");
-                responseMAP = HttpUtils.parseJSONLogin(responseJSON);
-                Log.i(TAG, "onClick: PARSED RESPONSE");
-            } catch (JSONException e){
-                e.printStackTrace();
-            }
-
-            if(responseMAP!=null){
-                Log.i(TAG, "onClick: RESPONSE MAP IS NOT NULL" + responseMAP.toString());
-            }
-        } else {
-            Log.e(TAG, "onClick: responseJSON IS NULL");
-        }
 
 
 
@@ -105,8 +114,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     public void onResponse(final JSONObject response) {
                         Log.i(TAG, "onResponse: work? " + response.toString());
                         JSONObject result = response;
-                        if(result!=null)    
+                        if(result!=null) {
+                            Log.i(TAG, "onResponse: PRZED CALLBACK");
                             volleyCallback.onSuccess(result);
+                        }
                         else
                             Log.i(TAG, "onResponse: RESULT IS NULL");
                     }
@@ -120,7 +131,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
 
         mRequestQueue.add(request);
-
 
     }
 
