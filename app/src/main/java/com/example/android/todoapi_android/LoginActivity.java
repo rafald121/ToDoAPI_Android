@@ -23,7 +23,7 @@ import java.util.HashMap;
  * Created by Rafaello on 2017-01-17.
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener, VolleyCallback {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     public final String URLSTRING = "http://10.0.2.2:5000/login";
@@ -59,26 +59,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Log.e(TAG, "onClick: LOGIN OR DATA MUSTN'T BE EMPTY");
         } else {
             Log.i(TAG, "onClick: before postRequest");
-            postRequest(login,password);
+            postRequest(login,password, new VolleyCallback(){
+                @Override
+                public void onSuccess(JSONObject result) {
+                    responseJSON = result;
+                }
+            });
         }
 
+        Log.i(TAG, "onClick: PRZED RESPONSE != NULL");
         if (responseJSON!=null){
 
-            Log.i(TAG, "onClick: responseJSON != null ");
             try {
+                Log.i(TAG, "onClick: BEFORE PARSED RESPONSE");
                 responseMAP = HttpUtils.parseJSONLogin(responseJSON);
+                Log.i(TAG, "onClick: PARSED RESPONSE");
             } catch (JSONException e){
                 e.printStackTrace();
             }
 
             if(responseMAP!=null){
-                Log.i(TAG, "onClick: responseMAP IS NOT NULL, DATA: "  + responseMAP.toString());
-
-            } else {
-                Log.e(TAG, "onClick: RESPONSE MAP IS NULL");
+                Log.i(TAG, "onClick: RESPONSE MAP IS NOT NULL" + responseMAP.toString());
             }
-
-
         } else {
             Log.e(TAG, "onClick: responseJSON IS NULL");
         }
@@ -88,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    public void postRequest(String login, String password){
+    public void postRequest(String login, String password,final VolleyCallback volleyCallback){
 
         HashMap<String,String> params = new HashMap<String, String>();
         params.put("login", login);
@@ -101,16 +103,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onResponse(final JSONObject response) {
-//                        Log.i(TAG, "onResponse: dziala? " + response.toString());
-//                        Log.i(TAG, "onResponse: szybsze2");
+                        Log.i(TAG, "onResponse: work? " + response.toString());
                         JSONObject result = response;
-                        new VolleyCallback() {
-                            @Override
-                            public void onSuccess(JSONObject result) {
-                                responseJSON = result;
-                            }
-                        }.onSuccess(result);
-
+                        if(result!=null)    
+                            volleyCallback.onSuccess(result);
+                        else
+                            Log.i(TAG, "onResponse: RESULT IS NULL");
                     }
                 },
                 new Response.ErrorListener() {
@@ -127,8 +125,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    @Override
-    public void onSuccess(JSONObject result) {
-        responseJSON = result;
-    }
+
 }
