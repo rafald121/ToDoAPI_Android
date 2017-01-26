@@ -6,7 +6,7 @@ package com.example.android.todoapi_android;
 
 public class Task {
 
-    String title, details, timeToDo, tag, published_at;
+    String title, details, timeToDo, tag;
     int id;
     boolean done;
 
@@ -15,9 +15,17 @@ public class Task {
         this.details = details;
         this.timeToDo = timeToDo;
         this.tag = tag;
-        this.published_at = published_at;
-        this.id = id;
         this.done = done;
+        this.id = id;
+    }
+
+    public Task(String title, String details) {
+        this.title = title;
+        this.details = details;
+    }
+
+    public Task() {
+
     }
 
     public String getTitle() {
@@ -52,14 +60,6 @@ public class Task {
         this.tag = tag;
     }
 
-    public String getPublished_at() {
-        return published_at;
-    }
-
-    public void setPublished_at(String published_at) {
-        this.published_at = published_at;
-    }
-
     public int getId() {
         return id;
     }
@@ -83,7 +83,6 @@ public class Task {
                 ", details='" + details + '\'' +
                 ", timeToDo='" + timeToDo + '\'' +
                 ", tag='" + tag + '\'' +
-                ", published_at='" + published_at + '\'' +
                 ", id=" + id +
                 ", done=" + done +
                 '}';
