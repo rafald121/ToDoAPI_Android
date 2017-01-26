@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,6 +31,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public final String URLSTRING = "http://10.0.2.2:5000/login";
     EditText editTextLogin;
     EditText editTextPassword;
+    TextView textViewError;
 
     Button buttonLogin;
     String login, password;
@@ -46,6 +48,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         editTextLogin = (EditText) findViewById(R.id.login_edittext);
         editTextPassword = (EditText) findViewById(R.id.password_edittext);
+        textViewError = (TextView) findViewById(R.id.textViewError);
+        textViewError.setVisibility(TextView.INVISIBLE);
+
         buttonLogin = (Button) findViewById(R.id.login_button);
 
         buttonLogin.setOnClickListener(this);
@@ -60,6 +65,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if ( login.equals("") || password.equals("")){
             Log.e(TAG, "onClick: LOGIN OR DATA MUSTN'T BE EMPTY");
+            textViewError.setVisibility(TextView.VISIBLE);
+            textViewError.setText("LOGIN OR DATA MUSTN'T BE EMPTY");
         } else {
             Log.i(TAG, "onClick: before postRequest");
             postRequest(login,password, new VolleyCallback(){
@@ -82,13 +89,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if(responseMAP.get("info").equals("OK")) {
                             startActivity(toMain);
                         } else{
-
+                            textViewError.setVisibility(TextView.VISIBLE);
+                            textViewError.setText("Error in login");
                         }
                     } else {
                         Log.e(TAG, "onClick: responseJSON IS NULL");
                     }
 
                 }
+
+                @Override
+                public void onFailure(VolleyError error) {
+                    editTextLogin.setText("");
+                    editTextPassword.setText("");
+                    textViewError.setText("Invalid login or password");
+                    
+                }
+
+
             });
         }
 
@@ -126,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.e("Error tukej ", error.getMessage());
-                        responseJSON = null;
+                        volleyCallback.onFailure(error);
                     }
                 });
 
