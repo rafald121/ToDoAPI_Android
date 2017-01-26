@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
 
                         if(responseMAP.get("info").equals("OK")) {
+                            toMain.putExtra("login", login);
                             startActivity(toMain);
                         } else{
                             textViewError.setVisibility(TextView.VISIBLE);
@@ -103,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     editTextLogin.setText("");
                     editTextPassword.setText("");
                     textViewError.setText("Invalid login or password");
-                    
+
                 }
 
 
