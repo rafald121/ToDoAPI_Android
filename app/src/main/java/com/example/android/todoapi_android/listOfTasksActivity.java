@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -29,11 +31,20 @@ public class ListOfTasksActivity extends AppCompatActivity{
 
     public final static String getTasksListURL = "http://10.0.2.2:5000/tasks";
     private static final String TAG = ListOfTasksActivity.class.getSimpleName();
+
     List<Task> listOfTask;
+    RecyclerView recyclerView;
+    ListOfTaskAdapter listOfTaskAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.list_of_task);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
 
         try {
             getListOfTasks(new VolleyCallbackArray(){
@@ -44,8 +55,9 @@ public class ListOfTasksActivity extends AppCompatActivity{
                     listOfTask = HttpUtils.getListOfTask(result);
                     Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
 
+                    listOfTaskAdapter = new ListOfTaskAdapter(listOfTask);
 
-
+//                    TODO SET ADAPTER
                 }
 
                 @Override
