@@ -46,6 +46,7 @@ public class ListOfTasksActivity extends AppCompatActivity{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
+
         try {
             getListOfTasks(new VolleyCallbackArray(){
 
@@ -56,6 +57,7 @@ public class ListOfTasksActivity extends AppCompatActivity{
                     Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
 
                     listOfTaskAdapter = new ListOfTaskAdapter(listOfTask);
+                    recyclerView.setAdapter(listOfTaskAdapter);
 
 //                    TODO SET ADAPTER
                 }
