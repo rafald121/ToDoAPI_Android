@@ -42,6 +42,10 @@ public class ListOfTasksActivity extends AppCompatActivity{
                 public void onSuccess(JSONArray result) throws JSONException {
                     Log.i(TAG, "onSuccess: " + result.toString());
                     listOfTask = HttpUtils.getListOfTask(result);
+                    Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
+
+
+
                 }
 
                 @Override

@@ -10,7 +10,7 @@ public class Task {
     int id;
     boolean done;
 
-    public Task(String title, String details, String timeToDo, String tag, String published_at, int id, boolean done) {
+    public Task(String title, String details, String timeToDo, String tag, int id, boolean done) {
         this.title = title;
         this.details = details;
         this.timeToDo = timeToDo;
