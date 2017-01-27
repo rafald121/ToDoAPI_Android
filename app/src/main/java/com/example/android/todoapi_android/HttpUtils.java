@@ -53,9 +53,27 @@ public class HttpUtils {
 
     public static List<Task> getListOfTask(JSONArray response) throws JSONException{
         List<Task> list = new ArrayList<>();
-        Log.i(TAG, "getListOfTask: BEFORE TASKS LENGTH: ");
+        Task task = null;
 
         Log.i(TAG, "getListOfTask: TASKS LENGTH: " + response.toString());
+
+        for (int i = 0 ; i < response.length() ; i ++ ){
+            JSONObject jsonTask = response.getJSONObject(i);
+
+            String title = jsonTask.getString("title");
+            String details = jsonTask.getString("details");
+            String timeToDo = jsonTask.getString("timeToDo");
+            String tag = jsonTask.getString("tag");
+            String done = jsonTask.getString("done");
+            String id = jsonTask.getString("id");
+            if(  !(done.equals((String) "0") || done.equals((String)"1"))  ){
+                Log.e(TAG, "getListOfTask: done attribute must has value 0 or 1");
+            } else {
+                task = new Task(title, details, timeToDo, tag, Integer.parseInt(id), Boolean.parseBoolean(done));
+            }
+
+            list.add(task);
+        }
 
         return list;
 
