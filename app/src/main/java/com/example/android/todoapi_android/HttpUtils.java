@@ -26,4 +26,22 @@ public class HttpUtils {
         return map;
     }
 
+    public static HashMap<String, String> parseJSONNewTask(JSONObject response) throws JSONException{
+        HashMap<String, String> map = new HashMap<>();
+
+        String title = response.getString("title");
+        String details = response.getString("details");
+        String timeToDo = response.getString("timeToDo");
+        String tag = response.getString("tag");
+        String done = response.getString("done");
+
+        map.put("title", title);
+        map.put("details", details);
+        map.put("timeToDo", timeToDo);
+        map.put("tag", tag);
+        map.put("done", done);
+
+        return map;
+    }
+
 }

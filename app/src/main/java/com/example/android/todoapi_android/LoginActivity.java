@@ -123,6 +123,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
             });
+
+
         }
 
 
@@ -151,8 +153,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Log.i(TAG, "onResponse: PRZED CALLBACK");
                             volleyCallback.onSuccess(result);
                         }
-                        else
+                        else {
                             Log.i(TAG, "onResponse: RESULT IS NULL");
+                        }
                     }
                 },
                 new Response.ErrorListener() {

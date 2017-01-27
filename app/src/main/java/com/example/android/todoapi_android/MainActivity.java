@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
         String login = sharedPreferences.getString("login","");
-
+        String token = sharedPreferences.getString("token", "");
         infoAboutLogin.setText(infoAboutLogin.getText() + " " + login);
 //        String login = getIntent().getStringExtra("login");
-
+        Log.i(TAG, "onCreate: TOKEN?" + token);
 
 
         initButtons();
