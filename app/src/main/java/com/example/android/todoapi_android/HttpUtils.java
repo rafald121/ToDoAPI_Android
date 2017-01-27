@@ -2,6 +2,7 @@ package com.example.android.todoapi_android;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,7 +51,7 @@ public class HttpUtils {
         return map;
     }
 
-    public static List<Task> getListOfTask(JSONObject response) throws JSONException{
+    public static List<Task> getListOfTask(JSONArray response) throws JSONException{
         List<Task> list = new ArrayList<>();
         Log.i(TAG, "getListOfTask: BEFORE TASKS LENGTH: ");
 
