@@ -7,15 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,10 +36,10 @@ public class ListOfTasksActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
 
         try {
-            getListOfTasks(new VolleyCallback(){
+            getListOfTasks(new VolleyCallbackArray(){
 
                 @Override
-                public void onSuccess(JSONObject result) throws JSONException {
+                public void onSuccess(JSONArray result) throws JSONException {
                     Log.i(TAG, "onSuccess: " + result.toString());
                     listOfTask = HttpUtils.getListOfTask(result);
                 }
@@ -56,7 +56,8 @@ public class ListOfTasksActivity extends AppCompatActivity{
 
     }
 
-    private void getListOfTasks(final VolleyCallback volleyCallback) throws AuthFailureError {
+    private void getListOfTasks(final VolleyCallbackArray volleyCallbackArray) throws
+            AuthFailureError {
 
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
@@ -64,33 +65,22 @@ public class ListOfTasksActivity extends AppCompatActivity{
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
 
-        JsonObjectRequest request = new JsonObjectRequest(getTasksListURL, null,
-                new Response.Listener<JSONObject>() {
-
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, getTasksListURL, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.i(TAG, "onResponse: HAO");
+                    public void onResponse(JSONArray response) {
                         try {
-                            volleyCallback.onSuccess(response);
+                            volleyCallbackArray.onSuccess(response);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
+
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
-                        NetworkResponse response = error.networkResponse;
-                        if(response!=null)
-                        Log.e(TAG, "onErrorResponse: responseCode: " + response.statusCode );
-
-                        Log.e(TAG, "onErrorResponse: error: " +  error.toString());
-
-
-                        volleyCallback.onFailure(error);
-
+                        volleyCallbackArray.onFailure(error);
                     }
                 }){
             @Override
