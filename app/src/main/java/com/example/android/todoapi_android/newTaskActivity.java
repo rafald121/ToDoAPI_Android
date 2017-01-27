@@ -21,6 +21,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -111,7 +112,11 @@ public class NewTaskActivity extends AppCompatActivity {
                         JSONObject result = response;
                         if(result!=null) {
                             Log.i(TAG, "onResponse: PRZED CALLBACK");
-                            volleyCallback.onSuccess(result);
+                            try {
+                                volleyCallback.onSuccess(result);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                         else
                             Log.i(TAG, "onResponse: RESULT IS NULL");

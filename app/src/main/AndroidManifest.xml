@@ -39,7 +39,7 @@
 
         <activity
             android:name=".NewTaskActivity"
-            android:label="Create new task">
+            android:label="List of tasks ">
         </activity>
 
         <activity

@@ -2,6 +2,7 @@ package com.example.android.todoapi_android;
 
 import com.android.volley.VolleyError;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -9,6 +10,6 @@ import org.json.JSONObject;
  */
 
 public interface VolleyCallback{
-    void onSuccess(JSONObject result);
+    void onSuccess(JSONObject result) throws JSONException;
     void onFailure(VolleyError error);
 }

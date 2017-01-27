@@ -1,9 +1,15 @@
 package com.example.android.todoapi_android;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import static com.example.android.todoapi_android.ApplicationController.TAG;
 
 /**
  * Created by Rafaello on 2017-01-24.
@@ -42,6 +48,16 @@ public class HttpUtils {
         map.put("done", done);
 
         return map;
+    }
+
+    public static List<Task> getListOfTask(JSONObject response) throws JSONException{
+        List<Task> list = new ArrayList<>();
+        Log.i(TAG, "getListOfTask: BEFORE TASKS LENGTH: ");
+
+        Log.i(TAG, "getListOfTask: TASKS LENGTH: " + response.toString());
+
+        return list;
+
     }
 
 }

@@ -151,7 +151,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         JSONObject result = response;
                         if(result!=null) {
                             Log.i(TAG, "onResponse: PRZED CALLBACK");
-                            volleyCallback.onSuccess(result);
+                            try {
+                                volleyCallback.onSuccess(result);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
                         else {
                             Log.i(TAG, "onResponse: RESULT IS NULL");
