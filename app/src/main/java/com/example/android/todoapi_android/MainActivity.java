@@ -52,11 +52,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Log.i(TAG, "onClick: START");
         int clickedAction = v.getId();
         switch (clickedAction){
             case R.id.buttonNewTask:
+                Log.i(TAG, "onClick: buttonNewTask1");
                 Intent nextIntent = new Intent(this, NewTaskActivity.class);
+                Log.i(TAG, "onClick: buttonNewTask2");
                 startActivity(nextIntent);
+                Log.i(TAG, "onClick: buttonNewTask3");
                 break;
             case R.id.buttonListOfTasks:
                 Intent listOfTasks = new Intent(this, ListOfTasksActivity.class);
