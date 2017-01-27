@@ -42,6 +42,11 @@
             android:label="Create new task">
         </activity>
 
+        <activity
+            android:name=".ListOfTasksActivity"
+            android:label="Create new task">
+        </activity>
+
     </application>
 
 
