@@ -22,18 +22,19 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
 
     List <Task> list;
     private Context context;
-    private static RecyclerViewClickListener itemListener;
-
+    private static RecyclerViewClickListener clickListener;
+    private static RecyclerViewItemActions itemListener;
     public ListOfTaskAdapter(List<Task> listOfTask) {
         this.list = listOfTask;
     }
 
     public ListOfTaskAdapter(Context context, List<Task>
-            listOfTask, RecyclerViewClickListener itemListener){
+            listOfTask, RecyclerViewClickListener itemListener, RecyclerViewItemActions
+            itemActions){
         this.context = context;
         this.list = listOfTask;
-        this.itemListener = itemListener;
-
+        this.clickListener = itemListener;
+        this.itemListener = itemActions;
     }
 
     @Override
@@ -54,9 +55,6 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             holder.done.setImageResource(R.drawable.ic_done_black_24dp);
         else
             holder.done.setImageResource(R.drawable.ic_cancel_black_24dp);
-
-
-
     }
 
     @Override
@@ -90,14 +88,20 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
 
         @Override
         public void onClick(View v){
-            if(v.getId() == done.getId())
+            if(v.getId() == done.getId()) {
                 Log.i(TAG, "onClick: DONE CLICKED");
-            else if(v.getId() == edit.getId())
+                itemListener.recyclerViewUnOrDoneTask(v, this.getLayoutPosition());
+            }
+            else if(v.getId() == edit.getId()) {
                 Log.i(TAG, "onClick: EDIT CLICKED");
-            else if(v.getId() == delete.getId())
+                itemListener.recyclerViewEditTask(v, this.getLayoutPosition());
+            }
+            else if(v.getId() == delete.getId()){
                 Log.i(TAG, "onClick: DELETE CLICKED");
+                itemListener.recyclerViewUnOrDoneTask(v, this.getLayoutPosition());
+            }
             else
-                itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
+                clickListener.recyclerViewListClicked(v, this.getLayoutPosition());
         }
 
 

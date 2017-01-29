@@ -7,10 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -72,13 +69,39 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                     listOfTask = HttpUtils.getListOfTask(result);
                     Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
 
-                    listOfTaskAdapter = new ListOfTaskAdapter(getApplicationContext(),listOfTask,
+                    listOfTaskAdapter = new ListOfTaskAdapter(getApplicationContext(), listOfTask,
                             new RecyclerViewClickListener() {
                                 @Override
                                 public void recyclerViewListClicked(View v, int position) {
                                     Task task = listOfTask.get(position);
                                     Log.i(TAG, "recyclerViewListClicked: INFOBOUT" + task.toString
                                             ());
+
+                                }
+                            },
+                            new RecyclerViewItemActions() {
+                                @Override
+                                public void recyclerViewEditTask(View v, int position) {
+                                    Task task = listOfTask.get(position);
+                                    Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
+                                            task.getTitle());
+                                }
+
+                                @Override
+                                public void recyclerViewDeleteTask(View v, int position) {
+                                    Task task = listOfTask.get(position);
+                                    Log.i(TAG, "recyclerViewDeletetTask: delete clicked for " +
+                                            "title: " +
+                                            task.getTitle());
+                                }
+
+                                @Override
+                                public void recyclerViewUnOrDoneTask(View v, int position) {
+                                    Task task = listOfTask.get(position);
+                                    Log.i(TAG, "recyclerViewUnDoneTask: undone clicked for title:" +
+                                            " " +
+                                            task.getTitle());
+                                    
 
                                 }
                             });
@@ -96,32 +119,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
 
     @Override
     public void recyclerViewListClicked(View v, int position) {
-
-    }
-
-
-//
-//    @Override
-//    public void recyclerViewListClicked(View v, int position) {
-//
-//    }
-
-    public static class RecyclerItemClickListener implements RecyclerView.OnTouchListener{
-
-        private AdapterView.OnItemClickListener mListener;
-        GestureDetector mGestureDetector;
-
-        public interface OnItemClickListener {
-            public void onItemClick(View view, int position);
-
-            public void onLongItemClick(View view, int position);
-        }
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            return false;
-        }
-
-
 
     }
 
