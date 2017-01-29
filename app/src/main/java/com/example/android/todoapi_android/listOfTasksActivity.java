@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class ListOfTasksActivity extends AppCompatActivity{
 
-    public final static String getTasksListURL = "http://10.0.2.2:5000/tasks/";
+    public final static String getTasksListURL = "http://10.0.2.2:5000/tasks";
     private static final String TAG = ListOfTasksActivity.class.getSimpleName();
 
     String taskTag;
@@ -53,11 +53,11 @@ public class ListOfTasksActivity extends AppCompatActivity{
 //            taskTag="all";
 //        else
         if(tag.equals("school"))
-            taskTag="school";
+            taskTag="/school";
         else if(tag.equals("work"))
-            taskTag="work";
+            taskTag="/work";
         else if(tag.equals("home"))
-            taskTag="home";
+            taskTag="/home";
         else
             taskTag="";
 
@@ -90,6 +90,12 @@ public class ListOfTasksActivity extends AppCompatActivity{
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        taskTag="";
+    }
+
     private void getListOfTasks(final VolleyCallbackArray volleyCallbackArray) throws
             AuthFailureError {
 
@@ -98,7 +104,7 @@ public class ListOfTasksActivity extends AppCompatActivity{
         final String token = sharedPreferences.getString("token", "");
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
-
+        Log.i(TAG, "getListOfTasks: URL: " + getTasksListURL + taskTag);
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
                 getTasksListURL+taskTag,
                 null,

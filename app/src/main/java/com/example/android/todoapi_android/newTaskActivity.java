@@ -152,13 +152,13 @@ public class NewTaskActivity extends AppCompatActivity {
         String tag = "";
         switch (selectedButton){
             case R.id.radioButtonSchool:
-                tag = "School";
+                tag = "school";
                 break;
             case R.id.radioButtonWork:
-                tag = "Work";
+                tag = "work";
                 break;
             case R.id.radioButtonHome:
-                tag = "Home";
+                tag = "hrafal   ome";
                 break;
             default:
                 tag = "";
