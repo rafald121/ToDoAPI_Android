@@ -29,9 +29,10 @@ import java.util.Map;
 
 public class ListOfTasksActivity extends AppCompatActivity{
 
-    public final static String getTasksListURL = "http://10.0.2.2:5000/tasks";
+    public final static String getTasksListURL = "http://10.0.2.2:5000/tasks/";
     private static final String TAG = ListOfTasksActivity.class.getSimpleName();
 
+    String taskTag;
     List<Task> listOfTask;
     RecyclerView recyclerView;
     ListOfTaskAdapter listOfTaskAdapter;
@@ -45,6 +46,21 @@ public class ListOfTasksActivity extends AppCompatActivity{
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
+
+        String tag = getIntent().getStringExtra("tag");
+//
+//        if(tag.equals("all"))
+//            taskTag="all";
+//        else
+        if(tag.equals("school"))
+            taskTag="school";
+        else if(tag.equals("work"))
+            taskTag="work";
+        else if(tag.equals("home"))
+            taskTag="home";
+        else
+            taskTag="";
+
 
 
         try {
@@ -83,7 +99,9 @@ public class ListOfTasksActivity extends AppCompatActivity{
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(this);
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, getTasksListURL, null,
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
+                getTasksListURL+taskTag,
+                null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

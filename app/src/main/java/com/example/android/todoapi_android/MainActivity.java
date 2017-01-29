@@ -56,18 +56,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int clickedAction = v.getId();
         switch (clickedAction){
             case R.id.buttonNewTask:
-                Log.i(TAG, "onClick: buttonNewTask1");
                 Intent nextIntent = new Intent(this, NewTaskActivity.class);
-                Log.i(TAG, "onClick: buttonNewTask2");
                 startActivity(nextIntent);
-                Log.i(TAG, "onClick: buttonNewTask3");
                 break;
-            case R.id.buttonListOfTasks:
+            case R.id.buttonListOfTasks: //all
                 Intent listOfTasks = new Intent(this, ListOfTasksActivity.class);
+                listOfTasks.putExtra("tag","all");
                 startActivity(listOfTasks);
                 break;
+            case R.id.buttonSchoolTasks:
+                Intent school = new Intent(this, ListOfTasksActivity.class);
+                school.putExtra("tag","school");
+                startActivity(school);
+                break;
+            case R.id.buttonWorkTasks:
+                Intent work = new Intent(this, ListOfTasksActivity.class);
+                work.putExtra("tag","work");
+                startActivity(work);
+                break;
+            case R.id.buttonHomeTasks:
+                Intent home = new Intent(this, ListOfTasksActivity.class);
+                home.putExtra("tag","home");
+                startActivity(home);
+                break;
             default:
-                Log.i(TAG, "onClick: hmm?");
+                Log.e(TAG, "onClick: cos nie tak");
 
         }
 
