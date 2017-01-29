@@ -2,6 +2,7 @@ package com.example.android.todoapi_android;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
+
+import static com.example.android.todoapi_android.ApplicationController.TAG;
 
 /**
  * Created by Rafaello on 2017-01-27.
@@ -28,8 +31,9 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
     public ListOfTaskAdapter(Context context, List<Task>
             listOfTask, RecyclerViewClickListener itemListener){
         this.context = context;
-        this.itemListener = itemListener;
         this.list = listOfTask;
+        this.itemListener = itemListener;
+
     }
 
     @Override
@@ -61,7 +65,8 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnLongClickListener{
 
         ImageButton done, edit, delete;
         TextView title,details,timetodo;
@@ -78,11 +83,27 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             timetodo = (TextView) itemView.findViewById(R.id.textViewTimeToDo);
 
             itemView.setOnClickListener(this);
+            done.setOnClickListener(this);
+            edit.setOnClickListener(this);
+            delete.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v){
-            itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
+            if(v.getId() == done.getId())
+                Log.i(TAG, "onClick: DONE CLICKED");
+            else if(v.getId() == edit.getId())
+                Log.i(TAG, "onClick: EDIT CLICKED");
+            else if(v.getId() == delete.getId())
+                Log.i(TAG, "onClick: DELETE CLICKED");
+            else
+                itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
+        }
+
+
+        @Override
+        public boolean onLongClick(View v) {
+            return false;
         }
     }
 }
