@@ -158,7 +158,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 tag = "work";
                 break;
             case R.id.radioButtonHome:
-                tag = "hrafal   ome";
+                tag = "home";
                 break;
             default:
                 tag = "";

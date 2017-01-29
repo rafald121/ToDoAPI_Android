@@ -1,5 +1,6 @@
 package com.example.android.todoapi_android;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,20 @@ import java.util.List;
  */
 
 public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.MyViewHolder> {
+
+
     List <Task> list;
+    private Context context;
+    private static RecyclerViewClickListener itemListener;
+
     public ListOfTaskAdapter(List<Task> listOfTask) {
+        this.list = listOfTask;
+    }
+
+    public ListOfTaskAdapter(Context context, List<Task>
+            listOfTask, RecyclerViewClickListener itemListener){
+        this.context = context;
+        this.itemListener = itemListener;
         this.list = listOfTask;
     }
 
@@ -48,7 +61,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         ImageButton done, edit, delete;
         TextView title,details,timetodo;
@@ -64,6 +77,12 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             details = (TextView) itemView.findViewById(R.id.textViewDetails);
             timetodo = (TextView) itemView.findViewById(R.id.textViewTimeToDo);
 
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v){
+            itemListener.recyclerViewListClicked(v, this.getLayoutPosition());
         }
     }
 }
