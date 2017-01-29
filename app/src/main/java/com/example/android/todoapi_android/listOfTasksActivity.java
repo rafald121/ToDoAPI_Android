@@ -1,8 +1,10 @@
 package com.example.android.todoapi_android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,13 +39,17 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
     List<Task> listOfTask;
     RecyclerView recyclerView;
     ListOfTaskAdapter listOfTaskAdapter;
-
+//    Intent editIntent;
+//    Intent deleteIntent;
+//    Intent undoneIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_task);
         Context context = this.getApplicationContext();
+
+//        editIntent = new Intent(this, EditTaskActivity.class);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -85,6 +91,16 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Task task = listOfTask.get(position);
                                     Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
                                             task.getTitle());
+
+
+                                    Intent editIntent = new Intent(ListOfTasksActivity.this,
+                                            EditTaskActivity.class);
+                                    SerializabledTask serializabledTask = new SerializabledTask
+                                            (task);
+                                    editIntent.putParcelableArrayListExtra("task", );
+//                                    editIntent.putExtra("task", serializabledTask);
+                                    Log.i(TAG, "recyclerViewEditTask: before start editIntent activity");
+                                    startActivity(editIntent);
                                 }
 
                                 @Override
@@ -101,7 +117,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewUnDoneTask: undone clicked for title:" +
                                             " " +
                                             task.getTitle());
-                                    
+
 
                                 }
                             });
