@@ -1,5 +1,7 @@
 package com.example.android.todoapi_android.Utils;
 
+import android.util.Log;
+
 import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 
 import java.util.HashMap;
@@ -19,6 +21,7 @@ public class HashMapUtils {
         map.put("tag", parcelabledTask.getTag());
         map.put("done", String.valueOf(parcelabledTask.isDone()));
         map.put("id", parcelabledTask.getId());
+        Log.i("MAPA TERAZ", "createHashMapFromObject: MAPA WARTOSCI: " + map.toString());
         return map;
     }
 }

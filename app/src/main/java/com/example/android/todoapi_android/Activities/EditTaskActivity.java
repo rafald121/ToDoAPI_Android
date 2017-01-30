@@ -110,6 +110,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                 @Override
                 public void onSuccess(JSONObject result) throws JSONException {
                     Log.i(TAG, "onSuccess: SUKCES");
+                    result.toString();
                     Intent intent = new Intent(EditTaskActivity.this, ListOfTasksActivity.class);
                     startActivity(intent);
                 }
