@@ -79,7 +79,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
             Log.e(TAG, "onCreate: PARCELABLE TASK IS NULL");
 
         fillInputWithData(parcelabledTask);
-        map = HashMapUtils.createHashMapFromObject(parcelabledTask);
         buttonAddTask.setOnClickListener(this);
 
     }
@@ -104,6 +103,27 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
+
+        String tag="";
+        int checkedRadio = radioGroup.getCheckedRadioButtonId();
+        if (checkedRadio == RBSchool.getId())
+            tag="school";
+        else if(checkedRadio == RBHome.getId())
+            tag="home";
+        else if(checkedRadio == RBWork.getId())
+            tag="work";
+        else
+            Log.e(TAG, "onClick: DON'T CHECKED RADIOBUTTON?");
+
+
+
+
+        map = HashMapUtils.createHashMapFromObject(
+                editTextTitle.getText().toString(),
+                editTextDetails.getText().toString(),
+                editTextTimeToDo.getText().toString(),
+                tag, parcelabledTask.isDone());
+
         if(v.getId() == buttonAddTask.getId())
             Log.i(TAG, "onClick: ID" + parcelabledTask.getId());
             sendEditRequest(parcelabledTask.getId() ,map, new VolleyCallback() {

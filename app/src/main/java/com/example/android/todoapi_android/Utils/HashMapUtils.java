@@ -2,8 +2,6 @@ package com.example.android.todoapi_android.Utils;
 
 import android.util.Log;
 
-import com.example.android.todoapi_android.Helpers.ParcelabledTask;
-
 import java.util.HashMap;
 
 /**
@@ -14,14 +12,16 @@ public class HashMapUtils {
 
     static HashMap<String,Object> map = new HashMap<>();
 
-    public static HashMap<String, Object> createHashMapFromObject(ParcelabledTask parcelabledTask) {
-        map.put("title", parcelabledTask.getTitle());
-        map.put("details", parcelabledTask.getDetails());
-        map.put("timeToDo", parcelabledTask.getTimeToDo());
-        map.put("tag", parcelabledTask.getTag());
-        map.put("done", String.valueOf(parcelabledTask.isDone()));
-        map.put("id", parcelabledTask.getId());
+    public static HashMap<String, Object> createHashMapFromObject
+            (String title, String details, String timeToDo, String tag, boolean done) {
+        map.put("title", title);
+        map.put("details", details);
+        map.put("timeToDo", timeToDo);
+        map.put("tag", tag);
+        map.put("done", done);
+
         Log.i("MAPA TERAZ", "createHashMapFromObject: MAPA WARTOSCI: " + map.toString());
+
         return map;
     }
 }
