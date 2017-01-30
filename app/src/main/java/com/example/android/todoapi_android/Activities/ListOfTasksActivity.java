@@ -111,19 +111,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Task task = listOfTask.get(position);
                                     Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
                                             task.getTitle());
-
-//                                    SerializabledTask sTask = new SerializabledTask(task.getTitle(),
-//                                            task.getDetails(), task.getTimeToDo(), task.getTag(),
-//                                            task.getId(), task.isDone());
-//
-//                                    if(sTask == null)
-//                                        Log.e(TAG, "recyclerViewEditTask: sTask IS NULL");
-//                                    else {
-//                                        Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
-//                                        Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
-//                                        editIntent.putExtra("task", sTask);
-//                                        startActivity(editIntent);
-
+                                    //TODO da sie skrocic \/?
                                     ParcelabledTask pTask = new ParcelabledTask();
                                     pTask.setTitle(task.getTitle());
                                     pTask.setDetails(task.getDetails());
@@ -136,15 +124,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     editIntent.putExtra("task", pTask);
                                     startActivity(editIntent);
 
-
-
-
-
-//                                    Log.i(TAG, "recyclerViewEditTask: get title? " + task.getTitle());
-//                                    editIntent.putExtra("title", task.getTitle());
-////                                    editIntent.putExtra("task", serializabledTask);
-//                                    Log.i(TAG, "recyclerViewEditTask: before start editIntent activity");
-//                                    startActivity(editIntent);
 
                                 }
 
@@ -161,9 +140,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                         deleteRequest(taskID, new VolleyCallbackDelete() {
                                             @Override
                                             public void onSuccess(JSONObject result) throws JSONException {
-                                                result.toString();
-
-
+                                                Log.i(TAG, "onSuccess: " + result.toString());
 
 //                                                Intent i = new Intent(ListOfTasksActivity.this,
 //                                                        ListOfTasksActivity.class);
@@ -172,7 +149,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
 
                                             @Override
                                             public void onFailure(VolleyError error) {
-
+                                                Log.i(TAG, "onFailure: " + error.toString());
                                             }
                                         });
                                     } catch (AuthFailureError authFailureError) {
