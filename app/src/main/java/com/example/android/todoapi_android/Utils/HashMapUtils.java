@@ -18,7 +18,7 @@ public class HashMapUtils {
         map.put("timeToDo", parcelabledTask.getTimeToDo());
         map.put("tag", parcelabledTask.getTag());
         map.put("done", String.valueOf(parcelabledTask.isDone()));
-
+        map.put("id", parcelabledTask.getId());
         return map;
     }
 }

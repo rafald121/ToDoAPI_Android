@@ -109,11 +109,14 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
             sendEditRequest(parcelabledTask.getId() ,map, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject result) throws JSONException {
-
+                    Log.i(TAG, "onSuccess: SUKCES");
+                    Intent intent = new Intent(EditTaskActivity.this, ListOfTasksActivity.class);
+                    startActivity(intent);
                 }
 
                 @Override
                 public void onFailure(VolleyError error) {
+                    Log.i(TAG, "onSuccess: PORAZKA");
 
                 }
             });
@@ -146,6 +149,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                             Log.i(TAG, "onResponse: PRZED CALLBACK");
                             try {
                                 volleyCallback.onSuccess(result);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

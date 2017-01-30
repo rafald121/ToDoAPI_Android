@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonListOfTasks: //all
                 Intent listOfTasks = new Intent(this, ListOfTasksActivity.class);
-                listOfTasks.putExtra("tag","all");
                 startActivity(listOfTasks);
                 break;
             case R.id.buttonSchoolTasks:

@@ -66,19 +66,26 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
         recyclerView.setLayoutManager(layoutManager);
 
 //        recyclerView.addOnItemTouchListener();
-        final String tag = getIntent().getStringExtra("tag");
+        if(getIntent().hasExtra("tag")) {
+            Log.i(TAG, "onCreate: 1");
+            final String tag = getIntent().getStringExtra("tag");
+            Log.e(TAG, "onCreate: tag from intent: " + tag );
+            if (tag.equals("school"))
+                taskTag = "/school";
+            else if (tag.equals("work"))
+                taskTag = "/work";
+            else if(tag.equals("home"))
+                taskTag = "/home";
+            else
+                Log.e(TAG, "onCreate: LOL" );
+            Log.i(TAG, "onCreate: taskTagInIf: " + taskTag);
+        } else {
+            Log.i(TAG, "onCreate: 2");
+            taskTag = "";
+        }
 
-        if(tag.equals("school"))
-            taskTag="/school";
-        else if(tag.equals("work"))
-            taskTag="/work";
-        else if(tag.equals("home"))
-            taskTag="/home";
-        else
-            taskTag="";
 
-
-
+        Log.i(TAG, "onCreate: TASKTAG: " + taskTag);
 
         try {
             getListOfTasks(new VolleyCallbackArray(){
