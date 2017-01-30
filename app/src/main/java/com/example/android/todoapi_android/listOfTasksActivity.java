@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -56,7 +55,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
         recyclerView.setLayoutManager(layoutManager);
 
 //        recyclerView.addOnItemTouchListener();
-        String tag = getIntent().getStringExtra("tag");
+        final String tag = getIntent().getStringExtra("tag");
 
         if(tag.equals("school"))
             taskTag="/school";
@@ -66,6 +65,9 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             taskTag="/home";
         else
             taskTag="";
+
+
+
 
         try {
             getListOfTasks(new VolleyCallbackArray(){
@@ -92,15 +94,19 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
                                             task.getTitle());
 
+                                    SerializabledTask sTask = new SerializabledTask(task);
 
-                                    Intent editIntent = new Intent(ListOfTasksActivity.this,
-                                            EditTaskActivity.class);
-                                    SerializabledTask serializabledTask = new SerializabledTask
-                                            (task);
-                                    editIntent.putParcelableArrayListExtra("task", );
-//                                    editIntent.putExtra("task", serializabledTask);
-                                    Log.i(TAG, "recyclerViewEditTask: before start editIntent activity");
+                                    Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
+
+                                    Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
+                                    editIntent.putExtra("task", sTask);
                                     startActivity(editIntent);
+//                                    Log.i(TAG, "recyclerViewEditTask: get title? " + task.getTitle());
+//                                    editIntent.putExtra("title", task.getTitle());
+////                                    editIntent.putExtra("task", serializabledTask);
+//                                    Log.i(TAG, "recyclerViewEditTask: before start editIntent activity");
+//                                    startActivity(editIntent);
+
                                 }
 
                                 @Override

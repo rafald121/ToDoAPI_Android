@@ -49,4 +49,9 @@ public class SerializabledTask implements Serializable {
     public boolean isDone() {
         return task.done;
     }
+
+    @Override
+    public String toString() {
+        return "SerializabledTask{" + task.toString() + '}';
+    }
 }
