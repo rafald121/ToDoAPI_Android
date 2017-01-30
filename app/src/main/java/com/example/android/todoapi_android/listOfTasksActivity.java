@@ -16,10 +16,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -94,15 +96,20 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
                                             task.getTitle());
 
-                                    SerializabledTask sTask = new SerializabledTask(task.getTitle
-                                            (), task.getDetails(), task.getTimeToDo(), task
-                                            .getTag(), task.getId(), task.isDone());
+                                    SerializabledTask sTask = new SerializabledTask(task.getTitle(),
+                                            task.getDetails(), task.getTimeToDo(), task.getTag(),
+                                            task.getId(), task.isDone());
 
-                                    Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
+                                    if(sTask == null)
+                                        Log.e(TAG, "recyclerViewEditTask: sTask IS NULL");
+                                    else {
+                                        Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
+                                        Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
+                                        editIntent.putExtra("task", sTask);
+                                        startActivity(editIntent);
+                                    }
 
-                                    Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
-                                    editIntent.putExtra("task", sTask);
-                                    startActivity(editIntent);
+
 //                                    Log.i(TAG, "recyclerViewEditTask: get title? " + task.getTitle());
 //                                    editIntent.putExtra("title", task.getTitle());
 ////                                    editIntent.putExtra("task", serializabledTask);
@@ -117,6 +124,32 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewDeletetTask: delete clicked for " +
                                             "title: " +
                                             task.getTitle());
+
+                                    String taskID = String.valueOf(task.getId());
+                                    try {
+
+                                        deleteRequest(taskID, new VolleyCallbackDelete() {
+                                            @Override
+                                            public void onSuccess(JSONObject result) throws JSONException {
+                                                result.toString();
+
+
+
+//                                                Intent i = new Intent(ListOfTasksActivity.this,
+//                                                        ListOfTasksActivity.class);
+//                                                startActivity(i);
+                                            }
+
+                                            @Override
+                                            public void onFailure(VolleyError error) {
+
+                                            }
+                                        });
+                                    } catch (AuthFailureError authFailureError) {
+                                        authFailureError.printStackTrace();
+                                    }
+
+
                                 }
 
                                 @Override
@@ -139,6 +172,48 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
         } catch (AuthFailureError authFailureError) {
             authFailureError.printStackTrace();
         }
+    }
+
+    private void deleteRequest(String id, final VolleyCallbackDelete volleyCallbackDelete) throws AuthFailureError {
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
+                Context.MODE_PRIVATE);
+        final String token = sharedPreferences.getString("token", "");
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(this);
+        Log.i(TAG, "getListOfTasks: URL: " + getTasksListURL + "/" + id);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                getTasksListURL + "/" + id,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            volleyCallbackDelete.onSuccess(response);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        volleyCallbackDelete.onFailure(error);
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("token", token);
+
+                return headers;
+            }
+
+        };
+        Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
+        mRequestQueue.add(request);
     }
 
     @Override
@@ -195,4 +270,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
         mRequestQueue.add(request);
 
     }
+
+
 }

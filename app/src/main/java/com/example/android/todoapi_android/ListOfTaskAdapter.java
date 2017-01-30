@@ -98,7 +98,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             }
             else if(v.getId() == delete.getId()){
                 Log.i(TAG, "onClick: DELETE CLICKED");
-                itemListener.recyclerViewUnOrDoneTask(v, this.getLayoutPosition());
+                itemListener.recyclerViewDeleteTask(v, this.getLayoutPosition());
             }
             else
                 clickListener.recyclerViewListClicked(v, this.getLayoutPosition());

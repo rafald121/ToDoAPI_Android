@@ -22,34 +22,61 @@ public class SerializabledTask implements Serializable {
         this.done = done;
     }
 
-    public SerializabledTask(Task task) {
-        this.task = task;
+    public String getTitle() {
+        return title;
     }
 
-    public String getTitle() {
-        return task.title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDetails() {
-        return task.details;
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
     }
 
     public String getTimeToDo() {
-        return task.timeToDo;
+        return timeToDo;
+    }
+
+    public void setTimeToDo(String timeToDo) {
+        this.timeToDo = timeToDo;
     }
 
     public String getTag() {
-        return task.tag;
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     public int getId() {
-        return task.id;
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isDone() {
-        return task.done;
+        return done;
     }
 
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
 
     @Override
     public String toString() {

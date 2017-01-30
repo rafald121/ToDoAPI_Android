@@ -37,7 +37,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.new_task);
+        setContentView(R.layout.edit_task);
 
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
@@ -50,7 +50,10 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 //        Log.i(TAG, "onCreate: odczytany string" + s);
         Intent i = getIntent();
         SerializabledTask sTask = (SerializabledTask) i.getSerializableExtra("task");
-        Log.i(TAG, "onCreate: sTask to String: " + sTask.toString());
+        if(sTask == null)
+            Log.e(TAG, "onCreate: sTASK IS NULL" );
+
+//        Log.i(TAG, "onCreate: sTask to String: " + sTask.toString());
 
         Log.i(TAG, "onCreate: TOKEN?" + token);
 
@@ -66,17 +69,19 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         RBWork = (RadioButton) findViewById(R.id.radioButtonWork);
         RBHome = (RadioButton) findViewById(R.id.radioButtonHome);
 
-
-//        fillInputWithData(sTask);
-
+        Log.i(TAG, "onCreate: przedFIllINPUTWITHDATA");
+        fillInputWithData(sTask);
+//
 //        buttonAddTask.setOnClickListener(this);
 
     }
 
     private void fillInputWithData(SerializabledTask sTask) {
+        Log.i(TAG, "fillInputWithData: jeszcze dziala");
         editTextTitle.setText(sTask.getTitle());
         editTextDetails.setText(sTask.getDetails());
         editTextTimeToDo.setText(sTask.getTimeToDo());
+        Log.i(TAG, "fillInputWithData: dodalem wartosci editText");
         if(sTask.getTag().equals("school"))
             RBSchool.setChecked(true);
         else if(sTask.getTag().equals("work"))
