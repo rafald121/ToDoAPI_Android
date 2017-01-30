@@ -18,15 +18,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.android.todoapi_android.Utils.HttpUtils;
 import com.example.android.todoapi_android.Adapters.ListOfTaskAdapter;
-import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.DTO.Task;
+import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.Interfaces.RecyclerViewClickListener;
 import com.example.android.todoapi_android.Interfaces.RecyclerViewItemActions;
-import com.example.android.todoapi_android.Helpers.SerializabledTask;
-import com.example.android.todoapi_android.DTO.Task;
 import com.example.android.todoapi_android.Interfaces.VolleyCallbackArray;
 import com.example.android.todoapi_android.Interfaces.VolleyCallbackDelete;
+import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Utils.HttpUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -105,18 +105,32 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
                                             task.getTitle());
 
-                                    SerializabledTask sTask = new SerializabledTask(task.getTitle(),
-                                            task.getDetails(), task.getTimeToDo(), task.getTag(),
-                                            task.getId(), task.isDone());
+//                                    SerializabledTask sTask = new SerializabledTask(task.getTitle(),
+//                                            task.getDetails(), task.getTimeToDo(), task.getTag(),
+//                                            task.getId(), task.isDone());
+//
+//                                    if(sTask == null)
+//                                        Log.e(TAG, "recyclerViewEditTask: sTask IS NULL");
+//                                    else {
+//                                        Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
+//                                        Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
+//                                        editIntent.putExtra("task", sTask);
+//                                        startActivity(editIntent);
 
-                                    if(sTask == null)
-                                        Log.e(TAG, "recyclerViewEditTask: sTask IS NULL");
-                                    else {
-                                        Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
-                                        Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
-                                        editIntent.putExtra("task", sTask);
-                                        startActivity(editIntent);
-                                    }
+                                    ParcelabledTask pTask = new ParcelabledTask();
+                                    pTask.setTitle(task.getTitle());
+                                    pTask.setDetails(task.getDetails());
+                                    pTask.setTimeToDo(task.getTimeToDo());
+                                    pTask.setTag(task.getTag());
+                                    pTask.setId(task.getId());
+                                    pTask.setDone(task.isDone());
+
+                                    Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
+                                    editIntent.putExtra("task", pTask);
+                                    startActivity(editIntent);
+
+
+
 
 
 //                                    Log.i(TAG, "recyclerViewEditTask: get title? " + task.getTitle());

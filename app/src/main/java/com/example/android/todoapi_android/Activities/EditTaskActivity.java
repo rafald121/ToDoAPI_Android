@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.R;
 import com.example.android.todoapi_android.Helpers.SerializabledTask;
 
@@ -32,7 +33,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
     RadioGroup radioGroup;
     Button buttonAddTask;
 
-    SerializabledTask sTask;
 
     HashMap<String, String> map;
 
@@ -52,9 +52,14 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 //        String s = getIntent().getStringExtra("title");
 //        Log.i(TAG, "onCreate: odczytany string" + s);
         Intent i = getIntent();
-        SerializabledTask sTask = (SerializabledTask) i.getSerializableExtra("task");
-        if(sTask == null)
-            Log.e(TAG, "onCreate: sTASK IS NULL" );
+        ParcelabledTask parcelabledTask = i.getParcelableExtra("task");
+//        parcelabledTask.toString();
+        Log.i(TAG, "onCreate: HALO KURWA");
+        Log.i(TAG, "onCreate: parcelable: " + parcelabledTask.toString());
+
+//        SerializabledTask sTask = (SerializabledTask) i.getSerializableExtra("task");
+//        if(sTask == null)
+//            Log.e(TAG, "onCreate: sTASK IS NULL" );
 
 //        Log.i(TAG, "onCreate: sTask to String: " + sTask.toString());
 
@@ -73,7 +78,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         RBHome = (RadioButton) findViewById(R.id.radioButtonHome);
 
         Log.i(TAG, "onCreate: przedFIllINPUTWITHDATA");
-        fillInputWithData(sTask);
+//        fillInputWithData(sTask);
 //
 //        buttonAddTask.setOnClickListener(this);
 
