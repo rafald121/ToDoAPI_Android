@@ -1,4 +1,4 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Helpers.SerializabledTask;
 
 import java.util.HashMap;
 

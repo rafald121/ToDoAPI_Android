@@ -1,4 +1,4 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.android.todoapi_android.Utils.HttpUtils;
+import com.example.android.todoapi_android.Adapters.ListOfTaskAdapter;
+import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Interfaces.RecyclerViewClickListener;
+import com.example.android.todoapi_android.Interfaces.RecyclerViewItemActions;
+import com.example.android.todoapi_android.Helpers.SerializabledTask;
+import com.example.android.todoapi_android.DTO.Task;
+import com.example.android.todoapi_android.Interfaces.VolleyCallbackArray;
+import com.example.android.todoapi_android.Interfaces.VolleyCallbackDelete;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,7 +40,7 @@ import java.util.Map;
  * Created by Rafaello on 2017-01-26.
  */
 
-public class ListOfTasksActivity extends AppCompatActivity implements RecyclerViewClickListener{
+public class ListOfTasksActivity extends AppCompatActivity implements RecyclerViewClickListener {
 
     public final static String getTasksListURL = "http://10.0.2.2:5000/tasks";
     private static final String TAG = ListOfTasksActivity.class.getSimpleName();

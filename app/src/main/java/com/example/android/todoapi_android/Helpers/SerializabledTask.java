@@ -1,4 +1,6 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Helpers;
+
+import com.example.android.todoapi_android.DTO.Task;
 
 import java.io.Serializable;
 

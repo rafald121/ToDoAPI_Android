@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="Login">
 
             <intent-filter>
@@ -26,7 +26,7 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="To Do List">
 <!--TODO sprawdzic co zmienia usuniecie intent filter \/-->
 
@@ -38,17 +38,17 @@
         </activity>
 
         <activity
-            android:name=".NewTaskActivity"
+            android:name=".Activities.NewTaskActivity"
             android:label="List of tasks ">
         </activity>
 
         <activity
-            android:name=".EditTaskActivity"
+            android:name=".Activities.EditTaskActivity"
             android:label="List of tasks ">
         </activity>
 
         <activity
-            android:name=".ListOfTasksActivity"
+            android:name=".Activities.ListOfTasksActivity"
             android:label="Create new task">
         </activity>
 

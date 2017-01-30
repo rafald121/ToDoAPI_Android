@@ -1,4 +1,4 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.DTO;
 
 /**
  * Created by Rafaello on 2017-01-17.
