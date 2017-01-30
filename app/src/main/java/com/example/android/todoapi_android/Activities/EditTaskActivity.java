@@ -13,10 +13,26 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.android.todoapi_android.Helpers.ParcelabledTask;
+import com.example.android.todoapi_android.Interfaces.VolleyCallback;
 import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Utils.HashMapUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.android.todoapi_android.Activities.NewTaskActivity.AddTaskURL;
 
 /**
  * Created by Rafaello on 2017-01-29.
@@ -33,10 +49,8 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
     RadioGroup radioGroup;
     Button buttonAddTask;
 
-//    SerializabledTask sTask;
-
-    HashMap<String, String> map;
-
+    HashMap<String, Object> map;
+    ParcelabledTask parcelabledTask;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,46 +68,28 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         RBSchool = (RadioButton) findViewById(R.id.radioButtonSchool);
         RBWork = (RadioButton) findViewById(R.id.radioButtonWork);
         RBHome = (RadioButton) findViewById(R.id.radioButtonHome);
-        
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
-                Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
+
         Intent i = getIntent();
-        ParcelabledTask parcelabledTask = i.getParcelableExtra("task");
+        parcelabledTask = i.getParcelableExtra("task");
 
         if(parcelabledTask!=null) {
-            Log.i(TAG, "onCreate: parcelable: " + parcelabledTask.toString());
-            Log.i(TAG, "onCreate: TITLE" + parcelabledTask.getTitle());
-            Log.i(TAG, "onCreate: DETAILS" + parcelabledTask.getDetails());
-            Log.i(TAG, "onCreate: ID" + parcelabledTask.getId());
+            Log.i(TAG, "onCreate: WCZYTANO PARCELABLED TASK");
         }
         else
             Log.e(TAG, "onCreate: PARCELABLE TASK IS NULL");
 
-        Log.i(TAG, "onCreate: TOKEN?" + token);
-
-        
-
-        Log.i(TAG, "onCreate: przedFIllINPUTWITHDATA " + parcelabledTask.toString());
-
         fillInputWithData(parcelabledTask);
-        
-//
-//        buttonAddTask.setOnClickListener(this);
+        map = HashMapUtils.createHashMapFromObject(parcelabledTask);
+        buttonAddTask.setOnClickListener(this);
 
     }
 
     private void fillInputWithData(ParcelabledTask sTask) {
-        Log.i(TAG, "fillInputWithData: POCZATEK FILLINPUTWITHDATA dane: " + sTask.toString());
-        Log.i(TAG, "fillInputWithData: jeszcze dziala");
-        Log.i(TAG, "fillInputWithData: TITLE: " + sTask.getTitle());
+
 
         editTextTitle.setText(sTask.getTitle());
         editTextDetails.setText(sTask.getDetails());
         editTextTimeToDo.setText(sTask.getTimeToDo());
-        Log.i(TAG, "fillInputWithData: dodalem wartosci editText");
-        Log.i(TAG, "fillInputWithData: editText" + editTextTitle.getText().toString() +
-                editTextDetails.getText().toString() +  editTextTimeToDo.getText().toString());
 
         if(sTask.getTag().equals("school"))
             RBSchool.setChecked(true);
@@ -104,66 +100,80 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         else
             Log.e(TAG, "fillInputWithData: OTRZYMALEM OBIEKT BEZ ZAZNACZONEGO TAGU" + sTask.toString());
 
-//        Intent refresh = new Intent(this, EditTaskActivity.class);
-//        startActivity(refresh);
-//        this.finish();
     }
 
     @Override
     public void onClick(View v) {
-//        if(v.getId() == buttonAddTask.getId())
-//            sendEditRequest()
+        if(v.getId() == buttonAddTask.getId())
+            Log.i(TAG, "onClick: ID" + parcelabledTask.getId());
+            sendEditRequest(parcelabledTask.getId() ,map, new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject result) throws JSONException {
+
+                }
+
+                @Override
+                public void onFailure(VolleyError error) {
+
+                }
+            });
+
     }
 
 
 
-//    private void sendEditRequest(HashMap<String, String> map, final VolleyCallback volleyCallback) {
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
-//                Context.MODE_PRIVATE);
-//        final String token = sharedPreferences.getString("token", "");
-//
-//        RequestQueue mRequestQueue = Volley.newRequestQueue(this);
-//
-//        JsonObjectRequest request = new JsonObjectRequest(AddTaskURL, new JSONObject(map),
-//                new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(final JSONObject response) {
-//                        Log.i(TAG, "onResponse: work? " + response.toString());
-//                        JSONObject result = response;
-//                        if(result!=null) {
-//                            Log.i(TAG, "onResponse: PRZED CALLBACK");
-//                            try {
-//                                volleyCallback.onSuccess(result);
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                        else
-//                            Log.i(TAG, "onResponse: RESULT IS NULL");
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        VolleyLog.e("Error tukej ", error.getMessage());
-//                        volleyCallback.onFailure(error);
-//                    }
-//                }){
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("token", token);
-//                headers.put("Content-Type", "application/json");
-//                return headers;
-//            }
-//        };
-//        mRequestQueue.add(request);
-//    }
+    private void sendEditRequest(int id, HashMap<String, Object> map, final VolleyCallback
+            volleyCallback) {
 
-//    private void fillInputWithData() {
-//        editTextTitle.setText();
-//    }
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
+                Context.MODE_PRIVATE);
+        final String token = sharedPreferences.getString("token", "");
+
+        RequestQueue mRequestQueue = Volley.newRequestQueue(this);
+
+        String url = AddTaskURL + "/" + id;
+        Log.i(TAG, "sendEditRequest: URL IN PUT REQUEST: " + url);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT,url,
+                new JSONObject (map),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(final JSONObject response) {
+
+                        Log.i(TAG, "onResponse: work? " + response.toString());
+                        JSONObject result = response;
+
+                        if(result!=null) {
+                            Log.i(TAG, "onResponse: PRZED CALLBACK");
+                            try {
+                                volleyCallback.onSuccess(result);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        else
+                            Log.i(TAG, "onResponse: RESULT IS NULL");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error tukej in put", error.getMessage());
+                        volleyCallback.onFailure(error);
+                    }
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("token", token);
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        mRequestQueue.add(request);
+    }
+
+
 
 
 }
