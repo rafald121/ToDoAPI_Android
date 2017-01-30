@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.R;
-import com.example.android.todoapi_android.Helpers.SerializabledTask;
 
 import java.util.HashMap;
 
@@ -27,12 +26,14 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
     public static final String EditTaskURL = "http://10.0.2.2:5000/tasks"; // + id !
     private static final String TAG = EditTaskActivity.class.getSimpleName();
+
     EditText editTextTitle,editTextDetails,editTextTimeToDo;
     TextView textViewError;
     RadioButton RBSchool, RBWork, RBHome;
     RadioGroup radioGroup;
     Button buttonAddTask;
 
+//    SerializabledTask sTask;
 
     HashMap<String, String> map;
 
@@ -41,29 +42,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_task);
-
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
-                Context.MODE_PRIVATE);
-        String token = sharedPreferences.getString("token", "");
-//        String login = getIntent().getStringExtra("login");
-
-//        Intent i = getIntent();
-//        SerializabledTask task = (SerializabledTask) i.getSerializableExtra("task");
-//        String s = getIntent().getStringExtra("title");
-//        Log.i(TAG, "onCreate: odczytany string" + s);
-        Intent i = getIntent();
-        ParcelabledTask parcelabledTask = i.getParcelableExtra("task");
-//        parcelabledTask.toString();
-        Log.i(TAG, "onCreate: HALO KURWA");
-        Log.i(TAG, "onCreate: parcelable: " + parcelabledTask.toString());
-
-//        SerializabledTask sTask = (SerializabledTask) i.getSerializableExtra("task");
-//        if(sTask == null)
-//            Log.e(TAG, "onCreate: sTASK IS NULL" );
-
-//        Log.i(TAG, "onCreate: sTask to String: " + sTask.toString());
-
-        Log.i(TAG, "onCreate: TOKEN?" + token);
 
         textViewError = (TextView) findViewById(R.id.textViewError);
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
@@ -76,20 +54,47 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         RBSchool = (RadioButton) findViewById(R.id.radioButtonSchool);
         RBWork = (RadioButton) findViewById(R.id.radioButtonWork);
         RBHome = (RadioButton) findViewById(R.id.radioButtonHome);
+        
+        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
+                Context.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", "");
+        Intent i = getIntent();
+        ParcelabledTask parcelabledTask = i.getParcelableExtra("task");
 
-        Log.i(TAG, "onCreate: przedFIllINPUTWITHDATA");
-//        fillInputWithData(sTask);
+        if(parcelabledTask!=null) {
+            Log.i(TAG, "onCreate: parcelable: " + parcelabledTask.toString());
+            Log.i(TAG, "onCreate: TITLE" + parcelabledTask.getTitle());
+            Log.i(TAG, "onCreate: DETAILS" + parcelabledTask.getDetails());
+            Log.i(TAG, "onCreate: ID" + parcelabledTask.getId());
+        }
+        else
+            Log.e(TAG, "onCreate: PARCELABLE TASK IS NULL");
+
+        Log.i(TAG, "onCreate: TOKEN?" + token);
+
+        
+
+        Log.i(TAG, "onCreate: przedFIllINPUTWITHDATA " + parcelabledTask.toString());
+
+        fillInputWithData(parcelabledTask);
+        
 //
 //        buttonAddTask.setOnClickListener(this);
 
     }
 
-    private void fillInputWithData(SerializabledTask sTask) {
+    private void fillInputWithData(ParcelabledTask sTask) {
+        Log.i(TAG, "fillInputWithData: POCZATEK FILLINPUTWITHDATA dane: " + sTask.toString());
         Log.i(TAG, "fillInputWithData: jeszcze dziala");
+        Log.i(TAG, "fillInputWithData: TITLE: " + sTask.getTitle());
+
         editTextTitle.setText(sTask.getTitle());
         editTextDetails.setText(sTask.getDetails());
         editTextTimeToDo.setText(sTask.getTimeToDo());
         Log.i(TAG, "fillInputWithData: dodalem wartosci editText");
+        Log.i(TAG, "fillInputWithData: editText" + editTextTitle.getText().toString() +
+                editTextDetails.getText().toString() +  editTextTimeToDo.getText().toString());
+
         if(sTask.getTag().equals("school"))
             RBSchool.setChecked(true);
         else if(sTask.getTag().equals("work"))
@@ -99,9 +104,9 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         else
             Log.e(TAG, "fillInputWithData: OTRZYMALEM OBIEKT BEZ ZAZNACZONEGO TAGU" + sTask.toString());
 
-        Intent refresh = new Intent(this, EditTaskActivity.class);
-        startActivity(refresh);
-        this.finish();
+//        Intent refresh = new Intent(this, EditTaskActivity.class);
+//        startActivity(refresh);
+//        this.finish();
     }
 
     @Override

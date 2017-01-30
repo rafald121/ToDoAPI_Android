@@ -3,8 +3,6 @@ package com.example.android.todoapi_android.Helpers;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.android.todoapi_android.DTO.Task;
-
 /**
  * Created by Rafaello on 2017-01-30.
  */
