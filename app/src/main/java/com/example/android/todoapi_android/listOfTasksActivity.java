@@ -94,7 +94,9 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
                                             task.getTitle());
 
-                                    SerializabledTask sTask = new SerializabledTask(task);
+                                    SerializabledTask sTask = new SerializabledTask(task.getTitle
+                                            (), task.getDetails(), task.getTimeToDo(), task
+                                            .getTag(), task.getId(), task.isDone());
 
                                     Log.i(TAG, "recyclerViewEditTask: sTaskInfo: " + sTask.toString());
 

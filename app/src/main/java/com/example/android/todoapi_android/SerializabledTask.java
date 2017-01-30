@@ -50,8 +50,17 @@ public class SerializabledTask implements Serializable {
         return task.done;
     }
 
+
     @Override
     public String toString() {
-        return "SerializabledTask{" + task.toString() + '}';
+        return "SerializabledTask{" +
+                "title='" + title + '\'' +
+                ", details='" + details + '\'' +
+                ", timeToDo='" + timeToDo + '\'' +
+                ", tag='" + tag + '\'' +
+                ", id=" + id +
+                ", done=" + done +
+                ", task=" + task +
+                '}';
     }
 }

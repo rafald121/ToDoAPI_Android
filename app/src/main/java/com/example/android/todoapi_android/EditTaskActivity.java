@@ -48,8 +48,8 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 //        SerializabledTask task = (SerializabledTask) i.getSerializableExtra("task");
 //        String s = getIntent().getStringExtra("title");
 //        Log.i(TAG, "onCreate: odczytany string" + s);
-
-        sTask = (SerializabledTask) getIntent().getSerializableExtra("task");
+        Intent i = getIntent();
+        SerializabledTask sTask = (SerializabledTask) i.getSerializableExtra("task");
         Log.i(TAG, "onCreate: sTask to String: " + sTask.toString());
 
         Log.i(TAG, "onCreate: TOKEN?" + token);
