@@ -1,5 +1,6 @@
 package com.example.android.todoapi_android.Activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -103,6 +104,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewListClicked: INFOBOUT" + task.toString
                                             ());
 
+                                    Dialog dialog = new TaskContentActivity();
                                 }
                             },
                             new RecyclerViewItemActions() {
