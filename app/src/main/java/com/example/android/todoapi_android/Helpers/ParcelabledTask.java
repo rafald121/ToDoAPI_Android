@@ -12,16 +12,7 @@ public class ParcelabledTask implements Parcelable{
     String title, details, timeToDo, tag;
     int id;
     boolean done;
-    /* everything below here is for implementing Parcelable */
 
-//    public ParcelabledTask(String title, String details, String timeToDo, String tag, int id, boolean done) {
-//        this.title = title;
-//        this.details = details;
-//        this.timeToDo = timeToDo;
-//        this.tag = tag;
-//        this.done = done;
-//        this.id = id;
-//    }
 
     public ParcelabledTask(){}
 

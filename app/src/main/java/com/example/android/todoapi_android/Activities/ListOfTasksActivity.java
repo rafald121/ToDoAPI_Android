@@ -141,15 +141,13 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                             @Override
                                             public void onSuccess(JSONObject result) throws JSONException {
                                                 Log.i(TAG, "onSuccess: " + result.toString());
-
-//                                                Intent i = new Intent(ListOfTasksActivity.this,
-//                                                        ListOfTasksActivity.class);
-//                                                startActivity(i);
+                                                listOfTaskAdapter.notifyDataSetChanged();
                                             }
 
                                             @Override
                                             public void onFailure(VolleyError error) {
                                                 Log.i(TAG, "onFailure: " + error.toString());
+
                                             }
                                         });
                                     } catch (AuthFailureError authFailureError) {
