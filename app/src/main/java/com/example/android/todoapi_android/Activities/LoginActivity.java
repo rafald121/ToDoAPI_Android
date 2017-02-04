@@ -1,4 +1,4 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.android.todoapi_android.Utils.HttpUtils;
+import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Interfaces.VolleyCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;

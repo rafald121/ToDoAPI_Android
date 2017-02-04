@@ -1,4 +1,4 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,9 +9,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.android.todoapi_android.DTO.Task;
+import com.example.android.todoapi_android.Interfaces.RecyclerViewClickListener;
+import com.example.android.todoapi_android.Interfaces.RecyclerViewItemActions;
+import com.example.android.todoapi_android.R;
+
 import java.util.List;
 
-import static com.example.android.todoapi_android.ApplicationController.TAG;
+import static com.example.android.todoapi_android.Helpers.ApplicationController.TAG;
 
 /**
  * Created by Rafaello on 2017-01-27.
@@ -98,7 +103,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             }
             else if(v.getId() == delete.getId()){
                 Log.i(TAG, "onClick: DELETE CLICKED");
-                itemListener.recyclerViewUnOrDoneTask(v, this.getLayoutPosition());
+                itemListener.recyclerViewDeleteTask(v, this.getLayoutPosition());
             }
             else
                 clickListener.recyclerViewListClicked(v, this.getLayoutPosition());

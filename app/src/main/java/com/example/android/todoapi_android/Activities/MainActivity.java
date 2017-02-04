@@ -1,4 +1,4 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.android.todoapi_android.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonListOfTasks: //all
                 Intent listOfTasks = new Intent(this, ListOfTasksActivity.class);
-                listOfTasks.putExtra("tag","all");
                 startActivity(listOfTasks);
                 break;
             case R.id.buttonSchoolTasks:

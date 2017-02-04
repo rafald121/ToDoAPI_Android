@@ -1,6 +1,8 @@
-package com.example.android.todoapi_android;
+package com.example.android.todoapi_android.Utils;
 
 import android.util.Log;
+
+import com.example.android.todoapi_android.DTO.Task;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -10,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.example.android.todoapi_android.ApplicationController.TAG;
+import static com.example.android.todoapi_android.Helpers.ApplicationController.TAG;
 
 /**
  * Created by Rafaello on 2017-01-24.
