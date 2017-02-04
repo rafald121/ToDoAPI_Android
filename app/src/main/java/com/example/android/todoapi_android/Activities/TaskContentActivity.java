@@ -2,9 +2,12 @@ package com.example.android.todoapi_android.Activities;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.view.Window;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.android.todoapi_android.DTO.Task;
+import com.example.android.todoapi_android.R;
 
 /**
  * Created by Rafaello on 2017-02-04.
@@ -12,10 +15,30 @@ import org.w3c.dom.Text;
 
 public class TaskContentActivity  extends Dialog{
 
-    TextView
+    TextView title,details,timeToDo, tag, done;
+    Task task = null;
 
-    public TaskContentActivity(Context context) {
+    public TaskContentActivity(Context context, Task task) {
         super(context);
+        this.task = task;
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.task_content);
+        title = (TextView) findViewById(R.id.textViewTitle);
+        details = (TextView) findViewById(R.id.taskContentDetails);
+        timeToDo = (TextView) findViewById(R.id.taskContentTimeToDo);
+        tag = (TextView) findViewById(R.id.taskContentTAG);
+
+        title.setText(task.getTitle());
+        details.setText(task.getDetails());
+        timeToDo.setText(task.getTimeToDo());
+        tag.setText(task.getTag());
+        done.setText(task.isDone()? "Yes" : "No");
+        
     }
 
 
