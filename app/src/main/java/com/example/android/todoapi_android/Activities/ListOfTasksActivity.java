@@ -104,9 +104,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewListClicked: INFOBOUT" + task.toString
                                             ());
 
-                                    Dialog dialog = new TaskContentActivity(ListOfTasksActivity
-                                            .this, task);
-
                                 }
                             },
                             new RecyclerViewItemActions() {

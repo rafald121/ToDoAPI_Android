@@ -1,8 +1,7 @@
 package com.example.android.todoapi_android.Activities;
 
-import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.TextView;
 
@@ -13,13 +12,12 @@ import com.example.android.todoapi_android.R;
  * Created by Rafaello on 2017-02-04.
  */
 
-public class TaskContentActivity  extends Dialog{
+public class TaskContentActivity  extends AppCompatActivity{
 
     TextView title,details,timeToDo, tag, done;
     Task task = null;
 
-    public TaskContentActivity(Context context, Task task) {
-        super(context);
+    public TaskContentActivity(Task task) {
         this.task = task;
     }
 
@@ -38,7 +36,7 @@ public class TaskContentActivity  extends Dialog{
         timeToDo.setText(task.getTimeToDo());
         tag.setText(task.getTag());
         done.setText(task.isDone()? "Yes" : "No");
-        
+
     }
 
 
