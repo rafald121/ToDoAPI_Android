@@ -142,6 +142,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                             public void onSuccess(JSONObject result) throws JSONException {
                                                 Log.i(TAG, "onSuccess: " + result.toString());
                                                 listOfTaskAdapter.notifyDataSetChanged();
+                                                Log.i(TAG, "onSuccess: after listOfTaskAdapter.notifyDataSetChanged()");
                                             }
 
                                             @Override
@@ -163,6 +164,15 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Log.i(TAG, "recyclerViewUnDoneTask: undone clicked for title:" +
                                             " " +
                                             task.getTitle());
+                                    ParcelabledTask editTask = new ParcelabledTask();
+                                    editTask.setTitle(task.getTitle());
+                                    editTask.setDetails(task.getDetails());
+                                    editTask.setTimeToDo(task.getTimeToDo());
+                                    editTask.setTag(task.getTag());
+                                    editTask.setId(task.getId());
+                                    editTask.setDone(task.isDone());
+
+                                    //TODO zedytować aby od razu wracało do listy i ją aktualizowalo
 
 
                                 }
