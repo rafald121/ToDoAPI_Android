@@ -3,6 +3,7 @@ package com.example.android.todoapi_android.Activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -16,6 +17,8 @@ import com.example.android.todoapi_android.R;
  */
 
 public class TaskContentActivity  extends Dialog implements View.OnClickListener{
+
+    public static final String TAG= TaskContentActivity.class.getSimpleName();
 
     TextView title,details,timeToDo, tag, done;
     Task task = null;
@@ -53,6 +56,7 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-
+        Log.i(TAG, "onClick: CLICKED IN DIALOG");
     }
 }
+

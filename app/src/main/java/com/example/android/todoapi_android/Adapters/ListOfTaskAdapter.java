@@ -207,6 +207,8 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             else { //CLICKED IN ITEM CONTENT, NOT IN BUTTON
                 Task clickedTask = list.get(getLayoutPosition());
                 Log.i(TAG, "onClick: clickedTask: " + clickedTask);
+
+                
             }
         }
 
