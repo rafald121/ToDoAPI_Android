@@ -99,6 +99,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                     Task task = listOfTask.get(position);
                                     Log.i(TAG, "recyclerViewListClicked: INFOBOUT" + task.toString
                                             ());
+                                    
 
                                 }
                             });
