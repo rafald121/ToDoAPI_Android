@@ -57,6 +57,10 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
 
     public ListOfTaskAdapter(Context context, List<Task>
             listOfTask, RecyclerViewClickListener itemListener){
+
+        if(listOfTask==null)
+            Log.e(TAG, "ListOfTaskAdapter: PASSED TO ADAPTER LSIT IS NULL");
+
         this.context = context;
         this.list = listOfTask;
         this.clickListener = itemListener;
@@ -126,13 +130,21 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                         Log.i(TAG, "onSuccess: result is edited properly, result info: " + result
                                 .toString());
 
+                        done.setImageResource(R.drawable.ic_done_black_24dp);
+
+                        Intent editIntent = new Intent(context, ListOfTasksActivity
+                                .class);
+                        editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(editIntent);
                     }
 
                     @Override
                     public void onFailure(VolleyError error) {
 
                     }
+
                 });
+
 
 
             }
@@ -210,6 +222,12 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             Log.i(TAG, "doneUndoneEdit: GOTTEN TASK: " + task.toString());
             int taskid = task.getId();
             HashMap<String, Object> map = HashMapUtils.createHashMapFromObject(task);
+
+//            if (task.isDone())
+//                task.setDone(false);
+//            else
+//                task.setDone(true);
+
 
             Log.i(TAG, "doneUndoneEdit: CONVERTED MAP: " + map.toString());
 

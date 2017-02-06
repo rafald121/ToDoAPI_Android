@@ -40,20 +40,20 @@
         <activity
             android:name=".Activities.NewTaskActivity"
             android:parentActivityName=".Activities.ListOfTasksActivity"
-            android:label="List of tasks ">
+            android:label="New task ">
         </activity>
 
         <activity
             android:name=".Activities.EditTaskActivity"
             android:parentActivityName=".Activities.ListOfTasksActivity"
-            android:label="List of tasks ">
+            android:label="Edit task">
         </activity>
 
         <activity
             android:name=".Activities.ListOfTasksActivity"
             android:parentActivityName=".Activities.MainActivity"
 
-            android:label="Create new task">
+            android:label="List of tasks">
         </activity>
 
     </application>

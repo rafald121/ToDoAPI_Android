@@ -88,7 +88,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             getListOfTasks(new VolleyCallbackArray(){
                 @Override
                 public void onSuccess(JSONArray result) throws JSONException {
-                    Log.i(TAG, "onSuccess: " + result.toString());
+                    Log.i(TAG, "onSuccess: tukkeeej" + result.toString());
                     listOfTask = HttpUtils.getListOfTask(result);
                     Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
 

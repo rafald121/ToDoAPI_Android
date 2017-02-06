@@ -30,6 +30,7 @@ public class HashMapUtils {
     }
 
     public static HashMap<String,Object> createHashMapFromObject(Task task) {
+
         map.put("title", task.getTitle());
         map.put("details", task.getDetails());
         map.put("timeToDo", task.getTimeToDo());
@@ -38,6 +39,8 @@ public class HashMapUtils {
             map.put("done", false);
         else
             map.put("done", true);
+
+
 
         Log.i(TAG, "createHashMapFromObject: MAPA TERAZ PO DOSTNAIU OBIEKTU TASK: " + map.toString());
 
