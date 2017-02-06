@@ -81,6 +81,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
         holder.title.setText(task.getTitle());
         holder.details.setText(task.getDetails());
         holder.timetodo.setText(task.getTimeToDo());
+        Log.i(TAG, "onBindViewHolder: TASK ID DONE OR NOT for:" +task.getTitle() + "  " + task.isDone());
         if(task.isDone())
             holder.done.setImageResource(R.drawable.ic_done_black_24dp);
         else
@@ -229,7 +230,8 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
 //                task.setDone(true);
 
 
-            Log.i(TAG, "doneUndoneEdit: CONVERTED MAP: " + map.toString());
+            Log.i(TAG, "doneUndoneEdit: CONVERTED MAP READY TO SEND PUT REQUEST: " + map.toString
+                    ());
 
 
             SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.SESSIONINFO,
@@ -320,7 +322,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 }
 
             };
-            Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
+//            Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
             mRequestQueue.add(request);
         }
 

@@ -35,10 +35,15 @@ public class HashMapUtils {
         map.put("details", task.getDetails());
         map.put("timeToDo", task.getTimeToDo());
         map.put("tag", task.getTag());
-        if(task.isDone())
+        if(task.isDone()) {
+            Log.i(TAG, "createHashMapFromObject: isDone = true");
             map.put("done", false);
-        else
+        }
+        else{
+            Log.i(TAG, "createHashMapFromObject: isDone = false");
             map.put("done", true);
+        }
+
 
 
 
