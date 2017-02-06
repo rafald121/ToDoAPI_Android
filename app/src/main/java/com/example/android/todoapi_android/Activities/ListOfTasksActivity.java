@@ -92,17 +92,23 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                     listOfTask = HttpUtils.getListOfTask(result);
                     Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
 
-                    listOfTaskAdapter = new ListOfTaskAdapter(getApplicationContext(), listOfTask,
+                    listOfTaskAdapter = new ListOfTaskAdapter(ListOfTasksActivity.this,
+                            listOfTask,
                             new RecyclerViewClickListener() {
                                 @Override
                                 public void recyclerViewListClicked(View v, int position) {
                                     Task task = listOfTask.get(position);
                                     Log.i(TAG, "recyclerViewListClicked: INFOBOUT" + task.toString
                                             ());
-                                    
+
+                                    TaskContentActivity taskContentActivity = new
+                                            TaskContentActivity(ListOfTasksActivity.this, task);
+                                    taskContentActivity.show();
+
 
                                 }
                             });
+
 //                            ,
 //                            new RecyclerViewItemActions() {
 //                                @Override
