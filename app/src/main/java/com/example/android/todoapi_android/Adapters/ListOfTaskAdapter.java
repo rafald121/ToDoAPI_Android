@@ -210,7 +210,8 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 Log.i(TAG, "onClick: clickedTask: " + clickedTask);
 
                 if(clickedTask!=null) {
-                    TaskContentActivity taskContentActivity = new TaskContentActivity(context, clickedTask);
+                    TaskContentActivity taskContentActivity = new TaskContentActivity(context,
+                            clickedTask);
                     taskContentActivity.show();
                 } else {
                     Log.e(TAG, "onClick: clickedTask is null");
