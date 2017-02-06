@@ -1,8 +1,13 @@
 package com.example.android.todoapi_android.Activities;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.todoapi_android.DTO.Task;
@@ -12,13 +17,24 @@ import com.example.android.todoapi_android.R;
  * Created by Rafaello on 2017-02-04.
  */
 
-public class TaskContentActivity  extends AppCompatActivity{
+public class TaskContentActivity  extends Dialog implements View.OnClickListener{
+
+    public static final String TAG= TaskContentActivity.class.getSimpleName();
 
     TextView title,details,timeToDo, tag, done;
     Task task = null;
+    Button button;
 
-    public TaskContentActivity(Task task) {
-        this.task = task;
+
+    public Activity taskContentActivity;
+    public Context taskContentContext;
+
+    public Dialog mDialog;
+
+    public TaskContentActivity(Context a, Task task){
+        super(a);
+        this.taskContentContext = a;
+        this.task=task;
     }
 
     @Override
@@ -26,10 +42,14 @@ public class TaskContentActivity  extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.task_content);
-        title = (TextView) findViewById(R.id.textViewTitle);
+        title = (TextView) findViewById(R.id.taskContentTitle);
         details = (TextView) findViewById(R.id.taskContentDetails);
         timeToDo = (TextView) findViewById(R.id.taskContentTimeToDo);
         tag = (TextView) findViewById(R.id.taskContentTAG);
+        done = (TextView) findViewById(R.id.taskContentDone);
+        button = (Button) findViewById(R.id.taskContentButton);
+        
+        Log.i(TAG, "onCreate: passed to " + TAG + " data: " + task.toString());
 
         title.setText(task.getTitle());
         details.setText(task.getDetails());
@@ -37,8 +57,19 @@ public class TaskContentActivity  extends AppCompatActivity{
         tag.setText(task.getTag());
         done.setText(task.isDone()? "Yes" : "No");
 
+
+        button.setOnClickListener(this);
     }
 
 
+    @Override
+    public void onClick(View v) {
+        Log.i(TAG, "onClick: CLICKED IN DIALOG");
+    }
 
+    @Override
+    public void onBackPressed() {
+        return;
+    }
 }
+

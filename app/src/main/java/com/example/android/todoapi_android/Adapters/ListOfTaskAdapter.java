@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.android.todoapi_android.Activities.EditTaskActivity;
 import com.example.android.todoapi_android.Activities.ListOfTasksActivity;
 import com.example.android.todoapi_android.Activities.LoginActivity;
+import com.example.android.todoapi_android.Activities.TaskContentActivity;
 import com.example.android.todoapi_android.DTO.Task;
 import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.Interfaces.RecyclerViewClickListener;
@@ -207,6 +208,15 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             else { //CLICKED IN ITEM CONTENT, NOT IN BUTTON
                 Task clickedTask = list.get(getLayoutPosition());
                 Log.i(TAG, "onClick: clickedTask: " + clickedTask);
+
+                if(clickedTask!=null) {
+                    TaskContentActivity taskContentActivity = new TaskContentActivity(context,
+                            clickedTask);
+                    taskContentActivity.show();
+                } else {
+                    Log.e(TAG, "onClick: clickedTask is null");
+                }
+
             }
         }
 
