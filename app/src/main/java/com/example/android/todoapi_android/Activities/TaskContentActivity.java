@@ -59,12 +59,14 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
 
 
         button.setOnClickListener(this);
+
     }
 
 
     @Override
     public void onClick(View v) {
         Log.i(TAG, "onClick: CLICKED IN DIALOG");
+
     }
 
     @Override
