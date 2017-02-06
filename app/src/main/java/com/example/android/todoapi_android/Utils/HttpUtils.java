@@ -57,6 +57,10 @@ public class HttpUtils {
         List<Task> list = new ArrayList<>();
         Task task = null;
 
+        int idToTask;
+        boolean doneToTask = false;
+
+
         Log.i(TAG, "getListOfTask: TASKS LENGTH: " + response.toString());
 
         for (int i = 0 ; i < response.length() ; i ++ ){
@@ -68,11 +72,24 @@ public class HttpUtils {
             String tag = jsonTask.getString("tag");
             String done = jsonTask.getString("done");
             String id = jsonTask.getString("id");
-            if(  !(done.equals((String) "0") || done.equals((String)"1"))  ){
-                Log.e(TAG, "getListOfTask: done attribute must has value 0 or 1");
-            } else {
-                task = new Task(title, details, timeToDo, tag, Integer.parseInt(id), Boolean.parseBoolean(done));
-            }
+
+            idToTask = Integer.parseInt(id);
+
+            if (done.equals("1"))
+                doneToTask = true;
+            else if (done.equals("0"))
+                doneToTask = false;
+            else
+                Log.e(TAG, "getListOfTask: doneToTask must have 0 or 1 value");
+
+            task = new Task(title, details, timeToDo, tag, idToTask, doneToTask);
+
+            Log.i(TAG, "getListOfTask: sparsowany task przed dodaniem do listy:  " + task.toString());
+//            if(  !(done.equals((String) "0") || done.equals((String)"1"))  ){
+//                Log.e(TAG, "getListOfTask: done attribute must has value 0 or 1");
+//            } else {
+//                task = new Task(title, details, timeToDo, tag, Integer.parseInt(id), Boolean.parseBoolean(done));
+//            }
 
             list.add(task);
         }
