@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.android.todoapi_android.Activities.EditTaskActivity;
@@ -24,8 +25,10 @@ import com.example.android.todoapi_android.Activities.LoginActivity;
 import com.example.android.todoapi_android.DTO.Task;
 import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.Interfaces.RecyclerViewClickListener;
+import com.example.android.todoapi_android.Interfaces.VolleyCallback;
 import com.example.android.todoapi_android.Interfaces.VolleyCallbackDelete;
 import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Utils.HashMapUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -117,8 +120,21 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 Task task = list.get(getLayoutPosition());
                 Log.i(TAG, "onClick: task info: " + task.toString());
 
+                doneUndoneEdit(task, new VolleyCallback() {
+                    @Override
+                    public void onSuccess(JSONObject result) throws JSONException {
+                        Log.i(TAG, "onSuccess: result is edited properly, result info: " + result
+                                .toString());
 
-//                itemListener.recyclerViewUnOrDoneTask(v, this.getLayoutPosition());
+                    }
+
+                    @Override
+                    public void onFailure(VolleyError error) {
+
+                    }
+                });
+
+
             }
             else if(v.getId() == edit.getId()) {
                 Log.i(TAG, "onClick: EDIT CLICKED");
@@ -138,7 +154,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 editIntent.putExtra("task", pTask);
                 editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(editIntent);
-//                itemListener.recyclerViewEditTask(v, this.getLayoutPosition());
+
             }
             else if(v.getId() == delete.getId()){
 
@@ -149,6 +165,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                         "title: " +
                         task.getTitle());
                 String taskID = String.valueOf(task.getId());
+
                 try {
 
                     deleteRequest(taskID, new VolleyCallbackDelete() {
@@ -173,17 +190,78 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                         .class);
                 editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(editIntent);
-//                itemListener.recyclerViewDeleteTask(v, this.getLayoutPosition());
             }
-            else
-                clickListener.recyclerViewListClicked(v, this.getLayoutPosition());
+            else { //CLICKED IN ITEM CONTENT, NOT IN BUTTON
+                Task clickedTask = list.get(getLayoutPosition());
+                Log.i(TAG, "onClick: clickedTask: " + clickedTask);
+            }
         }
-
 
         @Override
         public boolean onLongClick(View v) {
             return false;
         }
+
+
+        private void doneUndoneEdit(Task mtask, final VolleyCallback volleyCallback) {
+
+            Task task = mtask;
+
+            Log.i(TAG, "doneUndoneEdit: GOTTEN TASK: " + task.toString());
+            int taskid = task.getId();
+            HashMap<String, Object> map = HashMapUtils.createHashMapFromObject(task);
+
+            Log.i(TAG, "doneUndoneEdit: CONVERTED MAP: " + map.toString());
+
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.SESSIONINFO,
+                    Context.MODE_PRIVATE);
+            final String token = sharedPreferences.getString("token", "");
+            RequestQueue mRequestQueue = Volley.newRequestQueue(context);
+
+            String url = getTasksListURL + "/" + taskid;
+
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url,
+                    new JSONObject(map),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Log.i(TAG, "onResponse: wynik undone done edit: " + response.toString());
+
+                            if (response != null) {
+                                try {
+                                    volleyCallback.onSuccess(response);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            } else
+                                Log.e(TAG, "onResponse: response from server while editing " +
+                                        "done/undone is null");
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyLog.e("Error while edit done/undone task", error.getMessage());
+                            volleyCallback.onFailure(error);
+                        }
+                    }){
+                @Override
+                public Map<String,String> getHeaders() throws AuthFailureError{
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("token", token);
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
+
+            mRequestQueue.add(request);
+
+        }
+
+
 
         private void deleteRequest(String id, final VolleyCallbackDelete volleyCallbackDelete) throws AuthFailureError {
             SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity
@@ -227,6 +305,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
             mRequestQueue.add(request);
         }
+
 
     }
 

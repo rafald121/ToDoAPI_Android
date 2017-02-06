@@ -102,8 +102,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
 
                                 }
                             });
-
-
 //                            ,
 //                            new RecyclerViewItemActions() {
 //                                @Override
