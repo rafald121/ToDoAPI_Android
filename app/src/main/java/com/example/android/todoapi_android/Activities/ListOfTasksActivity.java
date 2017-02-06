@@ -1,8 +1,6 @@
 package com.example.android.todoapi_android.Activities;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,9 +19,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.android.todoapi_android.Adapters.ListOfTaskAdapter;
 import com.example.android.todoapi_android.DTO.Task;
-import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.Interfaces.RecyclerViewClickListener;
-import com.example.android.todoapi_android.Interfaces.RecyclerViewItemActions;
 import com.example.android.todoapi_android.Interfaces.VolleyCallbackArray;
 import com.example.android.todoapi_android.Interfaces.VolleyCallbackDelete;
 import com.example.android.todoapi_android.R;
@@ -105,79 +101,82 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                                             ());
 
                                 }
-                            },
-                            new RecyclerViewItemActions() {
-                                @Override
-                                public void recyclerViewEditTask(View v, int position) {
-                                    Task task = listOfTask.get(position);
-                                    Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
-                                            task.getTitle());
-                                    //TODO da sie skrocic \/?
-                                    ParcelabledTask pTask = new ParcelabledTask();
-                                    pTask.setTitle(task.getTitle());
-                                    pTask.setDetails(task.getDetails());
-                                    pTask.setTimeToDo(task.getTimeToDo());
-                                    pTask.setTag(task.getTag());
-                                    pTask.setId(task.getId());
-                                    pTask.setDone(task.isDone());
-
-                                    Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
-                                    editIntent.putExtra("task", pTask);
-                                    startActivity(editIntent);
-
-
-                                }
-
-                                @Override
-                                public void recyclerViewDeleteTask(View v, int position) {
-                                    Task task = listOfTask.get(position);
-                                    Log.i(TAG, "recyclerViewDeletetTask: delete clicked for " +
-                                            "title: " +
-                                            task.getTitle());
-
-                                    String taskID = String.valueOf(task.getId());
-                                    try {
-
-                                        deleteRequest(taskID, new VolleyCallbackDelete() {
-                                            @Override
-                                            public void onSuccess(JSONObject result) throws JSONException {
-                                                Log.i(TAG, "onSuccess: " + result.toString());
-                                                listOfTaskAdapter.notifyDataSetChanged();
-                                                Log.i(TAG, "onSuccess: after listOfTaskAdapter.notifyDataSetChanged()");
-                                            }
-
-                                            @Override
-                                            public void onFailure(VolleyError error) {
-                                                Log.i(TAG, "onFailure: " + error.toString());
-
-                                            }
-                                        });
-                                    } catch (AuthFailureError authFailureError) {
-                                        authFailureError.printStackTrace();
-                                    }
-
-
-                                }
-
-                                @Override
-                                public void recyclerViewUnOrDoneTask(View v, int position) {
-                                    Task task = listOfTask.get(position);
-                                    Log.i(TAG, "recyclerViewUnDoneTask: undone clicked for title:" +
-                                            " " +
-                                            task.getTitle());
-                                    ParcelabledTask editTask = new ParcelabledTask();
-                                    editTask.setTitle(task.getTitle());
-                                    editTask.setDetails(task.getDetails());
-                                    editTask.setTimeToDo(task.getTimeToDo());
-                                    editTask.setTag(task.getTag());
-                                    editTask.setId(task.getId());
-                                    editTask.setDone(task.isDone());
-
-                                    //TODO zedytować aby od razu wracało do listy i ją aktualizowalo
-
-
-                                }
                             });
+
+
+//                            ,
+//                            new RecyclerViewItemActions() {
+//                                @Override
+//                                public void recyclerViewEditTask(View v, int position) {
+////                                    Task task = listOfTask.get(position);
+////                                    Log.i(TAG, "recyclerViewEditTask: edit clicked for title: " +
+////                                            task.getTitle());
+////                                    //TODO da sie skrocic \/?
+////                                    ParcelabledTask pTask = new ParcelabledTask();
+////                                    pTask.setTitle(task.getTitle());
+////                                    pTask.setDetails(task.getDetails());
+////                                    pTask.setTimeToDo(task.getTimeToDo());
+////                                    pTask.setTag(task.getTag());
+////                                    pTask.setId(task.getId());
+////                                    pTask.setDone(task.isDone());
+////
+////                                    Intent editIntent = new Intent(ListOfTasksActivity.this, EditTaskActivity.class);
+////                                    editIntent.putExtra("task", pTask);
+////                                    startActivity(editIntent);
+//
+//
+//                                }
+//
+//                                @Override
+//                                public void recyclerViewDeleteTask(View v, int position) {
+//                                    Task task = listOfTask.get(position);
+//                                    Log.i(TAG, "recyclerViewDeletetTask: delete clicked for " +
+//                                            "title: " +
+//                                            task.getTitle());
+//
+//                                    String taskID = String.valueOf(task.getId());
+//                                    try {
+//
+//                                        deleteRequest(taskID, new VolleyCallbackDelete() {
+//                                            @Override
+//                                            public void onSuccess(JSONObject result) throws JSONException {
+//                                                Log.i(TAG, "onSuccess: " + result.toString());
+//                                                listOfTaskAdapter.notifyDataSetChanged();
+//                                                Log.i(TAG, "onSuccess: after listOfTaskAdapter.notifyDataSetChanged()");
+//                                            }
+//
+//                                            @Override
+//                                            public void onFailure(VolleyError error) {
+//                                                Log.i(TAG, "onFailure: " + error.toString());
+//
+//                                            }
+//                                        });
+//                                    } catch (AuthFailureError authFailureError) {
+//                                        authFailureError.printStackTrace();
+//                                    }
+//
+//
+//                                }
+//
+//                                @Override
+//                                public void recyclerViewUnOrDoneTask(View v, int position) {
+//                                    Task task = listOfTask.get(position);
+//                                    Log.i(TAG, "recyclerViewUnDoneTask: undone clicked for title:" +
+//                                            " " +
+//                                            task.getTitle());
+//                                    ParcelabledTask editTask = new ParcelabledTask();
+//                                    editTask.setTitle(task.getTitle());
+//                                    editTask.setDetails(task.getDetails());
+//                                    editTask.setTimeToDo(task.getTimeToDo());
+//                                    editTask.setTag(task.getTag());
+//                                    editTask.setId(task.getId());
+//                                    editTask.setDone(task.isDone());
+//
+//                                    //TODO zedytować aby od razu wracało do listy i ją aktualizowalo
+//
+//
+//                                }
+//                            });
                     recyclerView.setAdapter(listOfTaskAdapter);
                 }
                 @Override
@@ -191,6 +190,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
     }
 
     private void deleteRequest(String id, final VolleyCallbackDelete volleyCallbackDelete) throws AuthFailureError {
+
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
         final String token = sharedPreferences.getString("token", "");
