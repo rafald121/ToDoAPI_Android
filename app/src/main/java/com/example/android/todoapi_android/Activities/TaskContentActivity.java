@@ -23,8 +23,7 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
 
     TextView title,details,timeToDo, tag, done;
     Task task = null;
-    Button button;
-
+    Button buttonDelete, buttonEdit;
 
     public Activity taskContentActivity;
     public Context taskContentContext;
@@ -47,8 +46,9 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
         timeToDo = (TextView) findViewById(R.id.taskContentTimeToDo);
         tag = (TextView) findViewById(R.id.taskContentTAG);
         done = (TextView) findViewById(R.id.taskContentDone);
-        button = (Button) findViewById(R.id.taskContentButton);
-        
+        buttonDelete = (Button) findViewById(R.id.taskContentButtonDelete);
+        buttonEdit = (Button) findViewById(R.id.taskContentButtonEdit);
+
         Log.i(TAG, "onCreate: passed to " + TAG + " data: " + task.toString());
 
         title.setText(task.getTitle());
@@ -58,13 +58,22 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
         done.setText(task.isDone()? "Yes" : "No");
 
 
-        button.setOnClickListener(this);
+        buttonDelete.setOnClickListener(this);
+        buttonEdit.setOnClickListener(this);
+
+
     }
 
 
     @Override
     public void onClick(View v) {
         Log.i(TAG, "onClick: CLICKED IN DIALOG");
+        if(v.getId() == buttonDelete.getId()){
+            Log.i(TAG, "onClick: deleted");
+        } else if(v.getId() == buttonEdit.getId()){
+            Log.i(TAG, "onClick: edited");
+        } else
+            Log.e(TAG, "onClick: there isn't other button than delete or edit ");
     }
 
     @Override
