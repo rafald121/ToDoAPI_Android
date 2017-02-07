@@ -15,8 +15,10 @@ import com.example.android.todoapi_android.R;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    Button buttonNewTask, buttonListOfTasks, buttonSchoolTasks, buttonWorkTasks, buttonHomeTasks;
+    Button buttonNewTask, buttonListOfTasks, buttonSchoolTasks, buttonWorkTasks, buttonHomeTasks,
+            buttonLogout;
     TextView infoAboutLogin;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +31,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonSchoolTasks = (Button) findViewById(R.id.buttonSchoolTasks);
         buttonWorkTasks = (Button) findViewById( R.id.buttonWorkTasks);
         buttonHomeTasks = (Button) findViewById(R.id.buttonHomeTasks);
+        buttonLogout = (Button) findViewById(R.id.buttonLogout);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
+
+        sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
         String login = sharedPreferences.getString("login","");
         String token = sharedPreferences.getString("token", "");
         infoAboutLogin.setText(infoAboutLogin.getText() + " " + login);
 //        String login = getIntent().getStringExtra("login");
         Log.i(TAG, "onCreate: TOKEN?" + token);
-
-
         initButtons();
-
 
     }
 
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonSchoolTasks.setOnClickListener(this);
         buttonWorkTasks.setOnClickListener(this);
         buttonHomeTasks.setOnClickListener(this);
+        buttonLogout.setOnClickListener(this);
     }
 
     @Override
@@ -79,6 +81,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent home = new Intent(this, ListOfTasksActivity.class);
                 home.putExtra("tag","home");
                 startActivity(home);
+                break;
+            case R.id.buttonLogout:
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.commit();
+                Log.i(TAG, "onClick: czy wyczyszczono preferences? : " + sharedPreferences.getString("login",""));
+                Intent toLogin = new Intent(this, LoginActivity.class);
+                startActivity(toLogin);
                 break;
             default:
                 Log.e(TAG, "onClick: cos nie tak");
