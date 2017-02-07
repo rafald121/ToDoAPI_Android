@@ -72,7 +72,8 @@ public class NewTaskActivity extends AppCompatActivity {
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+//TODO chociaz tytul nie może być pusty ;)
+                
                 map = getDataFromActivityToMap();
 
                 postRequest(map, new VolleyCallback() {
