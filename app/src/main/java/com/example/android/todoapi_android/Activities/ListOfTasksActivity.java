@@ -60,6 +60,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
         recyclerView.setLayoutManager(layoutManager);
 
 //        recyclerView.addOnItemTouchListener();
+        //TODO albo tag albo done! :C
         if(getIntent().hasExtra("tag")) {
 
             Log.i(TAG, "onCreate: 1tag");

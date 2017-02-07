@@ -73,7 +73,7 @@ public class NewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //TODO chociaz tytul nie może być pusty ;)
-                
+
                 map = getDataFromActivityToMap();
 
                 postRequest(map, new VolleyCallback() {
