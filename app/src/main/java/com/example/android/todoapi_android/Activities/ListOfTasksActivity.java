@@ -81,9 +81,9 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             final String done = getIntent().getStringExtra("done");
 
             if(done.equals("done"))
-                doneOrUndone = "done";
+                doneOrUndone = "/done";
             else if (done.equals("undone"))
-                doneOrUndone =  "undone";
+                doneOrUndone =  "/undone";
             else
                 Log.e(TAG, "onCreate: unbelieviable");
         }
