@@ -96,9 +96,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(toLogin);
                 break;
             case R.id.buttonDoneTask:
-
+                Intent done = new Intent(this, ListOfTasksActivity.class);
+                done.putExtra("done","done");
+                startActivity(done);
                 break;
             case R.id.buttonUndoneTask:
+                Intent undone = new Intent(this, ListOfTasksActivity.class);
+                undone.putExtra("done","undone");
+                startActivity(undone);
                 break;
             default:
                 Log.e(TAG, "onClick: cos nie tak");
