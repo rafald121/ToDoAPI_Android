@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.android.todoapi_android.R;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = MainActivity.class.getSimpleName();
     Button buttonNewTask, buttonListOfTasks, buttonSchoolTasks, buttonWorkTasks, buttonHomeTasks,
             buttonLogout;
+    ImageButton buttonDoneList, buttonUndoneList;
     TextView infoAboutLogin;
     SharedPreferences sharedPreferences;
 
@@ -32,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonWorkTasks = (Button) findViewById( R.id.buttonWorkTasks);
         buttonHomeTasks = (Button) findViewById(R.id.buttonHomeTasks);
         buttonLogout = (Button) findViewById(R.id.buttonLogout);
-
+        buttonDoneList = (ImageButton) findViewById(R.id.buttonDoneTask);
+        buttonUndoneList = (ImageButton) findViewById(R.id.buttonUndoneTask);
 
         sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonWorkTasks.setOnClickListener(this);
         buttonHomeTasks.setOnClickListener(this);
         buttonLogout.setOnClickListener(this);
+        buttonDoneList.setOnClickListener(this);
+        buttonUndoneList.setOnClickListener(this);
     }
 
     @Override
@@ -89,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Log.i(TAG, "onClick: czy wyczyszczono preferences? : " + sharedPreferences.getString("login",""));
                 Intent toLogin = new Intent(this, LoginActivity.class);
                 startActivity(toLogin);
+                break;
+            case R.id.buttonDoneTask:
+                
+                break;
+            case R.id.buttonUndoneTask:
                 break;
             default:
                 Log.e(TAG, "onClick: cos nie tak");
