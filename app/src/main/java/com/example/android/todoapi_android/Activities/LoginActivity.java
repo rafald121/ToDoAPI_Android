@@ -169,6 +169,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+//                        TODO when server is off app is crash, fix it !
                         NetworkResponse networkResponse = error.networkResponse;
                         VolleyLog.e("Error code" + networkResponse.statusCode);
                         VolleyLog.e("Error tukej ", error.getMessage());
