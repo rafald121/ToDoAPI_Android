@@ -39,7 +39,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
     public final static String getTasksListURL = "http://10.0.2.2:5000/tasks";
     private static final String TAG = ListOfTasksActivity.class.getSimpleName();
 
-    String taskTag;
+    String taskTag,doneOrUndone;
     List<Task> listOfTask;
     RecyclerView recyclerView;
     ListOfTaskAdapter listOfTaskAdapter;
@@ -61,7 +61,8 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
 
 //        recyclerView.addOnItemTouchListener();
         if(getIntent().hasExtra("tag")) {
-            Log.i(TAG, "onCreate: 1");
+
+            Log.i(TAG, "onCreate: 1tag");
             final String tag = getIntent().getStringExtra("tag");
             Log.e(TAG, "onCreate: tag from intent: " + tag );
             if (tag.equals("school"))
@@ -72,9 +73,25 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                 taskTag = "/home";
             else
                 Log.e(TAG, "onCreate: LOL" );
+
             Log.i(TAG, "onCreate: taskTagInIf: " + taskTag);
-        } else {
-            Log.i(TAG, "onCreate: 2");
+
+        } else if(getIntent().hasExtra("done")) {
+
+            Log.i(TAG, "onCreate: 2done");
+            final String done = getIntent().getStringExtra("done");
+
+            if(done.equals("done"))
+                taskTag = "/done";
+            else if (done.equals("undone"))
+                taskTag =  "/undone";
+            else
+                Log.e(TAG, "onCreate: unbelieviable");
+
+            Log.i(TAG, "onCreate: DONEORUNDONE: " + doneOrUndone);
+        }
+        else {
+            Log.i(TAG, "onCreate: 3nic");
             taskTag = "";
         }
 
