@@ -73,6 +73,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                 taskTag = "/home";
             else
                 Log.e(TAG, "onCreate: LOL" );
+
             Log.i(TAG, "onCreate: taskTagInIf: " + taskTag);
 
         } else if(getIntent().hasExtra("done")) {
@@ -81,11 +82,13 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             final String done = getIntent().getStringExtra("done");
 
             if(done.equals("done"))
-                doneOrUndone = "/done";
+                taskTag = "/done";
             else if (done.equals("undone"))
-                doneOrUndone =  "/undone";
+                taskTag =  "/undone";
             else
                 Log.e(TAG, "onCreate: unbelieviable");
+
+            Log.i(TAG, "onCreate: DONEORUNDONE: " + doneOrUndone);
         }
         else {
             Log.i(TAG, "onCreate: 3nic");
