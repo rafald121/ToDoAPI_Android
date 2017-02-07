@@ -3,6 +3,7 @@ package com.example.android.todoapi_android.Activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.android.todoapi_android.DTO.Task;
+import com.example.android.todoapi_android.Helpers.ParcelabledTask;
 import com.example.android.todoapi_android.R;
 
 /**
@@ -67,10 +69,22 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        Log.i(TAG, "onClick: CLICKED IN DIALOG");
         if(v.getId() == buttonDelete.getId()){
+
             Log.i(TAG, "onClick: deleted");
         } else if(v.getId() == buttonEdit.getId()){
+            ParcelabledTask pTask = new ParcelabledTask();
+            pTask.setTitle(task.getTitle());
+            pTask.setDetails(task.getDetails());
+            pTask.setTimeToDo(task.getTimeToDo());
+            pTask.setTag(task.getTag());
+            pTask.setId(task.getId());
+            pTask.setDone(task.isDone());
+            Intent editIntent = new Intent(taskContentContext, EditTaskActivity
+                    .class);
+            editIntent.putExtra("task", pTask);
+            editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            taskContentContext.startActivity(editIntent);
             Log.i(TAG, "onClick: edited");
         } else
             Log.e(TAG, "onClick: there isn't other button than delete or edit ");
