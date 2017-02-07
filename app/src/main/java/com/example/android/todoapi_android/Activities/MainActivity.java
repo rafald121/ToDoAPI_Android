@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(toLogin);
                 break;
             case R.id.buttonDoneTask:
-                
+
                 break;
             case R.id.buttonUndoneTask:
                 break;
