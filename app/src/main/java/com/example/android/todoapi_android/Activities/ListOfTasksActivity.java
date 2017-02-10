@@ -43,17 +43,11 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
     List<Task> listOfTask;
     RecyclerView recyclerView;
     ListOfTaskAdapter listOfTaskAdapter;
-//    Intent editIntent;
-//    Intent deleteIntent;
-//    Intent undoneIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_of_task);
-        Context context = this.getApplicationContext();
-
-//        editIntent = new Intent(this, EditTaskActivity.class);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -61,9 +55,8 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
 
         if(getIntent().hasExtra("tag")) {
 
-            Log.i(TAG, "onCreate: 1tag");
             final String tag = getIntent().getStringExtra("tag");
-            Log.e(TAG, "onCreate: tag from intent: " + tag );
+
             if (tag.equals("school"))
                 taskTag = "/school";
             else if (tag.equals("work"))
@@ -71,13 +64,10 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             else if(tag.equals("home"))
                 taskTag = "/home";
             else
-                Log.e(TAG, "onCreate: LOL" );
-
-            Log.i(TAG, "onCreate: taskTagInIf: " + taskTag);
+                Log.e(TAG, "onCreate: other tag" );
 
         } else if(getIntent().hasExtra("done")) {
 
-            Log.i(TAG, "onCreate: 2done");
             final String done = getIntent().getStringExtra("done");
 
             if(done.equals("done"))
@@ -87,23 +77,19 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             else
                 Log.e(TAG, "onCreate: unbelieviable");
 
-            Log.i(TAG, "onCreate: DONEORUNDONE: " + doneOrUndone);
+            Log.i(TAG, "onCreate: DONE OR UNDONE: " + doneOrUndone);
         }
         else {
-            Log.i(TAG, "onCreate: 3nic");
             taskTag = "";
         }
 
-
-        Log.i(TAG, "onCreate: TASKTAG: " + taskTag);
+        Log.i(TAG, "onCreate: SELECTED TASK TAG: " + taskTag);
 
         try {
             getListOfTasks(new VolleyCallbackArray(){
                 @Override
                 public void onSuccess(JSONArray result) throws JSONException {
-                    Log.i(TAG, "onSuccess: tukkeeej" + result.toString());
                     listOfTask = HttpUtils.getListOfTask(result);
-                    Log.i(TAG, "onSuccess: list : " + listOfTask.toString());
 
                     listOfTaskAdapter = new ListOfTaskAdapter(ListOfTasksActivity.this,
                             listOfTask,
@@ -125,8 +111,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                 }
                 @Override
                 public void onFailure(VolleyError error) {
-                    //TODO dodać kod odpowiediz i jego wiadomosc
-                    Log.i(TAG, "onFailure: " + error.toString());
+                    Log.e(TAG, "onFailure: " + error.toString());
                 }
             });
         } catch (AuthFailureError authFailureError) {
@@ -184,7 +169,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
             }
 
         };
-        Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
         mRequestQueue.add(request);
 
     }
