@@ -59,8 +59,6 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
 
-//        recyclerView.addOnItemTouchListener();
-        //TODO albo tag albo done! :C
         if(getIntent().hasExtra("tag")) {
 
             Log.i(TAG, "onCreate: 1tag");
@@ -127,6 +125,7 @@ public class ListOfTasksActivity extends AppCompatActivity implements RecyclerVi
                 }
                 @Override
                 public void onFailure(VolleyError error) {
+                    //TODO dodać kod odpowiediz i jego wiadomosc
                     Log.i(TAG, "onFailure: " + error.toString());
                 }
             });

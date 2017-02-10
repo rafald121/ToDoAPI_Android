@@ -140,7 +140,8 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onFailure(VolleyError error) {
-                        Log.i(TAG, "onSuccess: PORAZKA");
+                        //TODO dodac, aby wyświetało kod odpowiedzi
+                        textViewError.setText("Error occurred while send edit request" + error.getMessage());
 
                     }
                 });

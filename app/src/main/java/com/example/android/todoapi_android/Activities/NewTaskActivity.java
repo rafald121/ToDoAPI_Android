@@ -88,6 +88,7 @@ public class NewTaskActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(VolleyError error) {
+                            //TODO dodac, aby wyświetało kod odpowiedzi
                             Log.i(TAG, "onFailure: " + error.toString());
                             textViewError.setText("error while adding task");
                         }
