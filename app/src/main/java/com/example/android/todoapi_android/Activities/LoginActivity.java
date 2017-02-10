@@ -11,16 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.android.todoapi_android.Utils.HttpUtils;
-import com.example.android.todoapi_android.R;
 import com.example.android.todoapi_android.Interfaces.VolleyCallback;
+import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Utils.HttpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -118,9 +117,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onFailure(VolleyError error) {
+
                     editTextLogin.setText("");
                     editTextPassword.setText("");
                     textViewError.setText("Invalid login or password");
+
                 }
             });
         }
@@ -157,8 +158,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onErrorResponse(VolleyError error) {
 //                        TODO when server is off app is crash, fix it !
-                        NetworkResponse networkResponse = error.networkResponse;
-                        VolleyLog.e("Error code" + networkResponse.statusCode);
                         VolleyLog.e("Error message ", error.getMessage());
                         volleyCallback.onFailure(error);
                     }
