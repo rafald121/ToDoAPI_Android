@@ -126,7 +126,10 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
         if(v.getId() == buttonAddTask.getId())
             Log.i(TAG, "onClick: ID" + parcelabledTask.getId());
+
+
             sendEditRequest(parcelabledTask.getId() ,map, new VolleyCallback() {
+
                 @Override
                 public void onSuccess(JSONObject result) throws JSONException {
                     Log.i(TAG, "onSuccess: SUKCES");

@@ -68,35 +68,49 @@ public class NewTaskActivity extends AppCompatActivity {
         RBWork = (RadioButton) findViewById(R.id.radioButtonWork);
         RBHome = (RadioButton) findViewById(R.id.radioButtonHome);
 
-
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //TODO chociaz tytul nie może być pusty ;)
 
-                map = getDataFromActivityToMap();
 
-                postRequest(map, new VolleyCallback() {
-                    @Override
-                    public void onSuccess(JSONObject result) {
-                        Log.i(TAG, "onSuccess: " + result.toString());
-                        Intent intent = new Intent(NewTaskActivity.this.getBaseContext(),
-                                MainActivity.class);
-                        startActivity(intent);
-                    }
+                if(checkIfFormWasFilled(editTextTitle)) {
+                    map = getDataFromActivityToMap();
 
-                    @Override
-                    public void onFailure(VolleyError error) {
-                        Log.i(TAG, "onFailure: " + error.toString());
-                        textViewError.setText("error while adding task");
-                    }
-                });
+                    postRequest(map, new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONObject result) {
+                            Log.i(TAG, "onSuccess: " + result.toString());
+                            Intent intent = new Intent(NewTaskActivity.this.getBaseContext(),
+                                    MainActivity.class);
+                            startActivity(intent);
+                        }
 
+                        @Override
+                        public void onFailure(VolleyError error) {
+                            Log.i(TAG, "onFailure: " + error.toString());
+                            textViewError.setText("error while adding task");
+                        }
+                    });
+                } else {
+                    Log.e(TAG, "onClick: nessecary inputs are empty" );
+                    textViewError.setText("You have to add title of task");
+
+                }
 
             }
         });
 
 
+    }
+    private boolean checkIfFormWasFilled(EditText editTextTitle){
+        if(editTextTitle.getText().toString().equals("")) {
+            Log.i(TAG, "checkIfFormWasFilled: FALSE");
+            return false;
+        } else {
+            Log.i(TAG, "checkIfFormWasFilled: FALSE");
+            return true;
+        }
     }
 
     private void postRequest(HashMap<String, String> map, final VolleyCallback volleyCallback) {

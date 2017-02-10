@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i(TAG, "onClick: START");
         int clickedAction = v.getId();
         switch (clickedAction){
+
             case R.id.buttonNewTask:
                 Intent nextIntent = new Intent(this, NewTaskActivity.class);
                 startActivity(nextIntent);
