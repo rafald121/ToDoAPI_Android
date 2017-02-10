@@ -100,6 +100,7 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
 
                     @Override
                     public void onFailure(VolleyError error) {
+//                        TODO dodać kod błłędu i wiadomosc błędu jeśli wystąpi
                         Log.i(TAG, "onFailure: " + error.toString());
 
                     }

@@ -24,6 +24,11 @@ public class Task {
         this.details = details;
     }
 
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
     public Task() {
 
     }

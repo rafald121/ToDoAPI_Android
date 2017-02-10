@@ -77,8 +77,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             textViewError.setText("LOGIN OR DATA MUSTN'T BE EMPTY");
         } else {
 
-            Log.i(TAG, "onClick: before postRequest");
-            postRequest(login,password, new VolleyCallback(){
+            Log.i(TAG, "onClick: before loginRequest");
+            loginRequest(login,password, new VolleyCallback(){
 
                 @Override
                 public void onSuccess(JSONObject result) {
@@ -131,14 +131,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
-
-
-
-
     }
 
 
-    public void postRequest(String login, String password,final VolleyCallback volleyCallback){
+    public void loginRequest(String login, String password,final VolleyCallback volleyCallback){
 
         HashMap<String,String> params = new HashMap<String, String>();
         params.put("login", login);

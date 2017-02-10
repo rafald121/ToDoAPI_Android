@@ -126,25 +126,40 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
         if(v.getId() == buttonAddTask.getId())
             Log.i(TAG, "onClick: ID" + parcelabledTask.getId());
-            sendEditRequest(parcelabledTask.getId() ,map, new VolleyCallback() {
-                @Override
-                public void onSuccess(JSONObject result) throws JSONException {
-                    Log.i(TAG, "onSuccess: SUKCES");
-                    result.toString();
-                    Intent intent = new Intent(EditTaskActivity.this, ListOfTasksActivity.class);
-                    startActivity(intent);
-                }
 
-                @Override
-                public void onFailure(VolleyError error) {
-                    Log.i(TAG, "onSuccess: PORAZKA");
+            if(checkIfFormWasFilled(editTextTitle)) {
+                sendEditRequest(parcelabledTask.getId(), map, new VolleyCallback() {
 
-                }
-            });
+                    @Override
+                    public void onSuccess(JSONObject result) throws JSONException {
+                        Log.i(TAG, "onSuccess: SUKCES");
+                        result.toString();
+                        Intent intent = new Intent(EditTaskActivity.this, ListOfTasksActivity.class);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(VolleyError error) {
+                        //TODO dodac, aby wyświetało kod odpowiedzi
+                        textViewError.setText("Error occurred while send edit request" + error.getMessage());
+
+                    }
+                });
+            }   else {
+                textViewError.setText("You have to add title of task");
+            }
 
     }
 
-
+    private boolean checkIfFormWasFilled(EditText editTextTitle){
+        if(editTextTitle.getText().toString().equals("")) {
+            Log.i(TAG, "checkIfFormWasFilled: FALSE");
+            return false;
+        } else {
+            Log.i(TAG, "checkIfFormWasFilled: FALSE");
+            return true;
+        }
+    }
 
     private void sendEditRequest(int id, HashMap<String, Object> map, final VolleyCallback
             volleyCallback) {
