@@ -53,8 +53,6 @@ public class NewTaskActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(LoginActivity.SESSIONINFO,
                 Context.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "");
-//        String login = getIntent().getStringExtra("login");
-        Log.i(TAG, "onCreate: TOKEN?" + token);
 
         textViewError = (TextView) findViewById(R.id.textViewError);
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
@@ -71,8 +69,6 @@ public class NewTaskActivity extends AppCompatActivity {
         buttonAddTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//TODO chociaz tytul nie może być pusty ;)
-
 
                 if(checkIfFormWasFilled(editTextTitle)) {
                     map = getDataFromActivityToMap();
@@ -80,7 +76,6 @@ public class NewTaskActivity extends AppCompatActivity {
                     postRequest(map, new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONObject result) {
-                            Log.i(TAG, "onSuccess: " + result.toString());
                             Intent intent = new Intent(NewTaskActivity.this.getBaseContext(),
                                     MainActivity.class);
                             startActivity(intent);
@@ -88,7 +83,6 @@ public class NewTaskActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(VolleyError error) {
-                            //TODO dodac, aby wyświetało kod odpowiedzi
                             Log.i(TAG, "onFailure: " + error.toString());
                             textViewError.setText("error while adding task");
                         }
@@ -96,9 +90,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 } else {
                     Log.e(TAG, "onClick: nessecary inputs are empty" );
                     textViewError.setText("You have to add title of task");
-
                 }
-
             }
         });
 
@@ -109,7 +101,7 @@ public class NewTaskActivity extends AppCompatActivity {
             Log.i(TAG, "checkIfFormWasFilled: FALSE");
             return false;
         } else {
-            Log.i(TAG, "checkIfFormWasFilled: FALSE");
+            Log.i(TAG, "checkIfFormWasFilled: TRUE");
             return true;
         }
     }
@@ -143,7 +135,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error tukej ", error.getMessage());
+                        VolleyLog.e("Error message: ", error.getMessage());
                         volleyCallback.onFailure(error);
                     }
                 }){

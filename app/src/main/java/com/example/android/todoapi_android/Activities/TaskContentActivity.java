@@ -1,6 +1,5 @@
 package com.example.android.todoapi_android.Activities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -44,10 +43,7 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
     Task task = null;
     Button buttonDelete, buttonEdit;
 
-    public Activity taskContentActivity;
     public Context taskContentContext;
-
-    public Dialog mDialog;
 
     public TaskContentActivity(Context a, Task task){
         super(a);
@@ -57,9 +53,11 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.task_content);
+
         title = (TextView) findViewById(R.id.taskContentTitle);
         details = (TextView) findViewById(R.id.taskContentDetails);
         timeToDo = (TextView) findViewById(R.id.taskContentTimeToDo);
@@ -68,19 +66,14 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
         buttonDelete = (Button) findViewById(R.id.taskContentButtonDelete);
         buttonEdit = (Button) findViewById(R.id.taskContentButtonEdit);
 
-        Log.i(TAG, "onCreate: passed to " + TAG + " data: " + task.toString());
-
         title.setText(task.getTitle());
         details.setText(task.getDetails());
         timeToDo.setText(task.getTimeToDo());
         tag.setText(task.getTag());
         done.setText(task.isDone()? "Yes" : "No");
 
-
         buttonDelete.setOnClickListener(this);
         buttonEdit.setOnClickListener(this);
-
-
     }
 
 
@@ -93,16 +86,13 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
                 deleteRequest(taskID, new VolleyCallbackDelete() {
                     @Override
                     public void onSuccess(JSONObject result) throws JSONException {
-                        Log.i(TAG, "onSuccess: " + result.toString());
-//                            list.notifyDataSetChanged();
-                        Log.i(TAG, "onSuccess: after listOfTaskAdapter.notifyDataSetChanged()");
+                        Log.i(TAG, "onSuccess: deleted: " + result.toString());
                     }
 
                     @Override
                     public void onFailure(VolleyError error) {
 //                        TODO dodać kod błłędu i wiadomosc błędu jeśli wystąpi
                         Log.i(TAG, "onFailure: " + error.toString());
-
                     }
                 });
             } catch (AuthFailureError authFailureError) {
@@ -115,7 +105,9 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
             taskContentContext.startActivity(editIntent);
 
             Log.i(TAG, "onClick: deleted");
+
         } else if(v.getId() == buttonEdit.getId()){
+
             ParcelabledTask pTask = new ParcelabledTask();
             pTask.setTitle(task.getTitle());
             pTask.setDetails(task.getDetails());
@@ -129,8 +121,10 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
             editIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             taskContentContext.startActivity(editIntent);
             Log.i(TAG, "onClick: edited");
+
         } else
             Log.e(TAG, "onClick: there isn't other button than delete or edit ");
+
     }
 
     @Override
@@ -178,7 +172,6 @@ public class TaskContentActivity  extends Dialog implements View.OnClickListener
             }
 
         };
-//            Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
         mRequestQueue.add(request);
     }
 

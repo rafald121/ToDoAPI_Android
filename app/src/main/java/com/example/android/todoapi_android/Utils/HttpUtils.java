@@ -20,7 +20,6 @@ import static com.example.android.todoapi_android.Helpers.ApplicationController.
 
 public class HttpUtils {
 
-
     public static HashMap<String, String> parseJSONLogin(JSONObject response) throws JSONException {
         HashMap<String, String> map = new HashMap<>();
 
@@ -60,9 +59,6 @@ public class HttpUtils {
         int idToTask;
         boolean doneToTask = false;
 
-
-        Log.i(TAG, "getListOfTask: TASKS LENGTH: " + response.toString());
-
         for (int i = 0 ; i < response.length() ; i ++ ){
             JSONObject jsonTask = response.getJSONObject(i);
 
@@ -85,11 +81,6 @@ public class HttpUtils {
             task = new Task(title, details, timeToDo, tag, idToTask, doneToTask);
 
             Log.i(TAG, "getListOfTask: sparsowany task przed dodaniem do listy:  " + task.toString());
-//            if(  !(done.equals((String) "0") || done.equals((String)"1"))  ){
-//                Log.e(TAG, "getListOfTask: done attribute must has value 0 or 1");
-//            } else {
-//                task = new Task(title, details, timeToDo, tag, Integer.parseInt(id), Boolean.parseBoolean(done));
-//            }
 
             list.add(task);
         }

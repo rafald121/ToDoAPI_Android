@@ -13,7 +13,6 @@ public class ParcelabledTask implements Parcelable{
     int id;
     boolean done;
 
-
     public ParcelabledTask(){}
 
     public String getTitle() {
@@ -90,20 +89,6 @@ public class ParcelabledTask implements Parcelable{
         done = (pc.readInt() == 1);
     }
 
-//    // write your object's data to the passed-in Parcel
-//    public ParcelabledTask(Parcel in){
-//        Object[] data = new String[6];
-//
-//        in.readSt
-//        this.title = (String) data[0];
-//        this.details = (String) data[1];
-//        this.timeToDo = (String) data[2];
-//        this.tag = (String) data[3];
-//        this.id = (int) data[4];
-//        this.done = (boolean) data[5];
-//
-//    }
-
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public ParcelabledTask createFromParcel(Parcel in) {
             return new ParcelabledTask(in);
@@ -113,7 +98,6 @@ public class ParcelabledTask implements Parcelable{
             return new ParcelabledTask[size];
         }
     };
-
 
     @Override
     public String toString() {

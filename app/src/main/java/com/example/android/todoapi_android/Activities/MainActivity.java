@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Context.MODE_PRIVATE);
         String login = sharedPreferences.getString("login","");
         String token = sharedPreferences.getString("token", "");
+
         infoAboutLogin.setText(infoAboutLogin.getText() + " " + login);
-//        String login = getIntent().getStringExtra("login");
-        Log.i(TAG, "onCreate: TOKEN?" + token);
+
         initButtons();
 
     }
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        Log.i(TAG, "onClick: START");
         int clickedAction = v.getId();
         switch (clickedAction){
 
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(undone);
                 break;
             default:
-                Log.e(TAG, "onClick: cos nie tak");
+                Log.e(TAG, "onClick: other option");
 
         }
 

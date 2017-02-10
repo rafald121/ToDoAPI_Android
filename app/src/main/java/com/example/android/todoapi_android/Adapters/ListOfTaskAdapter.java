@@ -51,7 +51,6 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
     List <Task> list;
     private Context context;
     private static RecyclerViewClickListener clickListener;
-//    private static RecyclerViewItemActions itemListener;
     public ListOfTaskAdapter(List<Task> listOfTask) {
         this.list = listOfTask;
     }
@@ -60,7 +59,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             listOfTask, RecyclerViewClickListener itemListener){
 
         if(listOfTask==null)
-            Log.e(TAG, "ListOfTaskAdapter: PASSED TO ADAPTER LSIT IS NULL");
+            Log.e(TAG, "ListOfTaskAdapter: PASSED TO ADAPTER LIST IS NULL");
 
         this.context = context;
         this.list = listOfTask;
@@ -82,7 +81,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
         holder.title.setText(task.getTitle());
         holder.details.setText(task.getDetails());
         holder.timetodo.setText(task.getTimeToDo());
-        Log.i(TAG, "onBindViewHolder: TASK ID DONE OR NOT for:" +task.getTitle() + "  " + task.isDone());
+
         if(task.isDone())
             holder.done.setImageResource(R.drawable.ic_done_black_24dp);
         else
@@ -129,8 +128,6 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 doneUndoneEdit(task, new VolleyCallback() {
                     @Override
                     public void onSuccess(JSONObject result) throws JSONException {
-                        Log.i(TAG, "onSuccess: result is edited properly, result info: " + result
-                                .toString());
 
                         done.setImageResource(R.drawable.ic_done_black_24dp);
 
@@ -142,20 +139,14 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
 
                     @Override
                     public void onFailure(VolleyError error) {
-
+                        Log.e(TAG, "onFailure: error message: " + error.toString() );
                     }
 
                 });
-
-
-
             }
             else if(v.getId() == edit.getId()) {
-                Log.i(TAG, "onClick: EDIT CLICKED");
-                Log.i(TAG, "onClick: position: " + getLayoutPosition());
                 Task task = list.get(getLayoutPosition());
 
-                Log.i(TAG, "onClick: task info: " + task.toString());
                 ParcelabledTask pTask = new ParcelabledTask();
                 pTask.setTitle(task.getTitle());
                 pTask.setDetails(task.getDetails());
@@ -172,12 +163,8 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             }
             else if(v.getId() == delete.getId()){
 
-                Log.i(TAG, "onClick: DELETE CLICKED");
-                Log.i(TAG, "onClick: position: " + getLayoutPosition());
                 Task task = list.get(getLayoutPosition());
-                Log.i(TAG, "recyclerViewDeletetTask: delete clicked for " +
-                        "title: " +
-                        task.getTitle());
+
                 String taskID = String.valueOf(task.getId());
 
                 try {
@@ -185,9 +172,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                     deleteRequest(taskID, new VolleyCallbackDelete() {
                         @Override
                         public void onSuccess(JSONObject result) throws JSONException {
-                            Log.i(TAG, "onSuccess: " + result.toString());
-//                            list.notifyDataSetChanged();
-                            Log.i(TAG, "onSuccess: after listOfTaskAdapter.notifyDataSetChanged()");
+                            Log.i(TAG, "onSuccess: deleted task: " + result.toString());
                         }
 
                         @Override
@@ -206,7 +191,9 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 context.startActivity(editIntent);
             }
             else { //CLICKED IN ITEM CONTENT, NOT IN BUTTON
+
                 Task clickedTask = list.get(getLayoutPosition());
+
                 Log.i(TAG, "onClick: clickedTask: " + clickedTask);
 
                 if(clickedTask!=null) {
@@ -230,19 +217,8 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
 
             Task task = mtask;
 
-            Log.i(TAG, "doneUndoneEdit: GOTTEN TASK: " + task.toString());
             int taskid = task.getId();
             HashMap<String, Object> map = HashMapUtils.createHashMapFromObject(task);
-
-//            if (task.isDone())
-//                task.setDone(false);
-//            else
-//                task.setDone(true);
-
-
-            Log.i(TAG, "doneUndoneEdit: CONVERTED MAP READY TO SEND PUT REQUEST: " + map.toString
-                    ());
-
 
             SharedPreferences sharedPreferences = context.getSharedPreferences(LoginActivity.SESSIONINFO,
                     Context.MODE_PRIVATE);
@@ -257,7 +233,6 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            Log.i(TAG, "onResponse: wynik undone done edit: " + response.toString());
 
                             if (response != null) {
                                 try {
@@ -286,9 +261,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                     return headers;
                 }
             };
-
             mRequestQueue.add(request);
-
         }
 
 
@@ -300,7 +273,7 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
             final String token = sharedPreferences.getString("token", "");
 
             RequestQueue mRequestQueue = Volley.newRequestQueue(context);
-            Log.i(TAG, "getListOfTasks: URL: " + getTasksListURL + "/" + id);
+
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
                     getTasksListURL + "/" + id,
                     null,
@@ -332,7 +305,6 @@ public class ListOfTaskAdapter extends RecyclerView.Adapter<ListOfTaskAdapter.My
                 }
 
             };
-//            Log.i(TAG, "getListOfTasks: headers: " + request.getHeaders().toString());
             mRequestQueue.add(request);
         }
 

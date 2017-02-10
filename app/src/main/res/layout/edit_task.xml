@@ -89,7 +89,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextTimeToDo"/>
 
     <Button
-        android:text="Add task"
+        android:text="Edit Task"
         android:layout_width="352dp"
         android:layout_height="wrap_content"
         android:id="@+id/buttonAddTask"

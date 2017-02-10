@@ -24,8 +24,6 @@ public class HashMapUtils {
         map.put("tag", tag);
         map.put("done", done);
 
-        Log.i("MAPA TERAZ", "createHashMapFromObject: MAPA WARTOSCI: " + map.toString());
-
         return map;
     }
 
@@ -35,6 +33,7 @@ public class HashMapUtils {
         map.put("details", task.getDetails());
         map.put("timeToDo", task.getTimeToDo());
         map.put("tag", task.getTag());
+
         if(task.isDone()) {
             Log.i(TAG, "createHashMapFromObject: isDone = true");
             map.put("done", false);
@@ -43,11 +42,6 @@ public class HashMapUtils {
             Log.i(TAG, "createHashMapFromObject: isDone = false");
             map.put("done", true);
         }
-
-
-
-
-        Log.i(TAG, "createHashMapFromObject: MAPA TERAZ PO DOSTNAIU OBIEKTU TASK: " + map.toString());
 
         return map;
 

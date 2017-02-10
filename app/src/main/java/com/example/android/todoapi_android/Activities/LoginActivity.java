@@ -11,16 +11,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.android.todoapi_android.Utils.HttpUtils;
-import com.example.android.todoapi_android.R;
 import com.example.android.todoapi_android.Interfaces.VolleyCallback;
+import com.example.android.todoapi_android.R;
+import com.example.android.todoapi_android.Utils.HttpUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,7 +60,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin = (Button) findViewById(R.id.login_button);
 
         buttonLogin.setOnClickListener(this);
-
     }
 
     @Override
@@ -72,11 +70,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         final Intent toMain = new Intent(this, MainActivity.class);
 
         if ( login.equals("") || password.equals("")){
+
             Log.e(TAG, "onClick: LOGIN OR DATA MUSTN'T BE EMPTY");
             textViewError.setVisibility(TextView.VISIBLE);
             textViewError.setText("LOGIN OR DATA MUSTN'T BE EMPTY");
-        } else {
 
+        } else {
             Log.i(TAG, "onClick: before loginRequest");
             loginRequest(login,password, new VolleyCallback(){
 
@@ -106,31 +105,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
 
                             startActivity(toMain);
+
                         } else{
                             textViewError.setVisibility(TextView.VISIBLE);
                             textViewError.setText("Error in login");
                         }
-
                     } else {
                         Log.e(TAG, "onClick: responseJSON IS NULL");
                     }
-
                 }
 
                 @Override
                 public void onFailure(VolleyError error) {
+
                     editTextLogin.setText("");
                     editTextPassword.setText("");
                     textViewError.setText("Invalid login or password");
 
                 }
-
-
             });
-
-
         }
-
     }
 
 
@@ -147,10 +141,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     @Override
                     public void onResponse(final JSONObject response) {
-                        Log.i(TAG, "onResponse: work? " + response.toString());
                         JSONObject result = response;
                         if(result!=null) {
-                            Log.i(TAG, "onResponse: PRZED CALLBACK");
                             try {
                                 volleyCallback.onSuccess(result);
                             } catch (JSONException e) {
@@ -166,9 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onErrorResponse(VolleyError error) {
 //                        TODO when server is off app is crash, fix it !
-                        NetworkResponse networkResponse = error.networkResponse;
-                        VolleyLog.e("Error code" + networkResponse.statusCode);
-                        VolleyLog.e("Error tukej ", error.getMessage());
+                        VolleyLog.e("Error message ", error.getMessage());
                         volleyCallback.onFailure(error);
                     }
                 });

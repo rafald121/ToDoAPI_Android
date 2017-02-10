@@ -74,11 +74,11 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
         if(parcelabledTask!=null) {
             Log.i(TAG, "onCreate: WCZYTANO PARCELABLED TASK");
+            fillInputWithData(parcelabledTask);
         }
         else
             Log.e(TAG, "onCreate: PARCELABLE TASK IS NULL");
 
-        fillInputWithData(parcelabledTask);
         buttonAddTask.setOnClickListener(this);
 
     }
@@ -115,9 +115,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         else
             Log.e(TAG, "onClick: DON'T CHECKED RADIOBUTTON?");
 
-
-
-
         map = HashMapUtils.createHashMapFromObject(
                 editTextTitle.getText().toString(),
                 editTextDetails.getText().toString(),
@@ -132,7 +129,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
 
                     @Override
                     public void onSuccess(JSONObject result) throws JSONException {
-                        Log.i(TAG, "onSuccess: SUKCES");
                         result.toString();
                         Intent intent = new Intent(EditTaskActivity.this, ListOfTasksActivity.class);
                         startActivity(intent);
@@ -142,7 +138,6 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                     public void onFailure(VolleyError error) {
                         //TODO dodac, aby wyświetało kod odpowiedzi
                         textViewError.setText("Error occurred while send edit request" + error.getMessage());
-
                     }
                 });
             }   else {
@@ -152,11 +147,12 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private boolean checkIfFormWasFilled(EditText editTextTitle){
+
         if(editTextTitle.getText().toString().equals("")) {
             Log.i(TAG, "checkIfFormWasFilled: FALSE");
             return false;
         } else {
-            Log.i(TAG, "checkIfFormWasFilled: FALSE");
+            Log.i(TAG, "checkIfFormWasFilled: TRUE");
             return true;
         }
     }
@@ -178,21 +174,19 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void onResponse(final JSONObject response) {
 
-                        Log.i(TAG, "onResponse: work? " + response.toString());
                         JSONObject result = response;
 
                         if(result!=null) {
                             Log.i(TAG, "onResponse: PRZED CALLBACK");
                             try {
                                 volleyCallback.onSuccess(result);
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                         }
                         else
-                            Log.i(TAG, "onResponse: RESULT IS NULL");
+                            Log.e(TAG, "onResponse: RESULT IS NULL");
                     }
                 },
                 new Response.ErrorListener() {
@@ -212,8 +206,4 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
         };
         mRequestQueue.add(request);
     }
-
-
-
-
 }
